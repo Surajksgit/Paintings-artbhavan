@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 class UserSignup(models.Model):
   
     phoneorusername = models.CharField(max_length=15)
+    email = models.EmailField(max_length=254, blank=True, null=True)
     password = models.CharField(max_length=15)
     
     
@@ -24,7 +25,7 @@ class UserSignup(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(UserSignup, on_delete=models.CASCADE)
-    phone = models.CharField(max_length=15, blank=True)
+    email = models.EmailField( max_length=254, blank=True, null=True)
     phoneorusername = models.CharField(max_length=15)
     profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
     phone = models.CharField(max_length=15, blank=True, null=True)

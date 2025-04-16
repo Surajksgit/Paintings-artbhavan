@@ -1,3 +1,5 @@
+<!-- myprofile.html -->
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -12,19 +14,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/myprofilescript.js' %}"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
     
 </head>
 <body>
     {% if messages %}
-<div class="messages">
-    {% for message in messages %}
-        <p class="alert alert-{{ message.tags }}">{{ message }}</p>
-    {% endfor %}
-</div>
+    <div class="flash-message-container">
+        {% for message in messages %}
+            <div class="flash-message alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
 {% endif %}
+
 
 <div class="container position-relative">
     <!-- Close Button -->
@@ -49,7 +54,7 @@
                 {% if form.profile_picture.value %}
                     <img src="{{ form.profile_picture.value.url }}" class="profile-pic" />
                 {% else %}
-                    <div class="profile-pic">{{ profile_initial }}</div>
+                    <div  class="profile-pic">{{ profile_initial }}</div>
                 {% endif %}
             </div>
             <div class="col">
@@ -66,18 +71,26 @@
                 <label class="form-label">Country</label>
                 {{ form.country }}
             </div>
+            <div class="col-md-6">
+                <label class="form-label">Email</label>
+                {{ form.email }}
+            </div>
             
         </div>
     
         <div class="row mb-3">
             <div class="col-md-6">
                 <label class="form-label" >Phone</label>
-                {{ form.phone }}
+                <div class="input-group">
+                    <span class="input-group-text" id="country-code">+91</span>
+                    {{ form.phone }}
+                </div>
             </div>
             <div class="col-md-6">
                 <label class="form-label">State</label>
                 {{ form.state }}
             </div>
+            
         </div>
     
         <div class="row mb-4">

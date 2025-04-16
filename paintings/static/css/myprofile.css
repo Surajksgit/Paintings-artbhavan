@@ -123,3 +123,41 @@ input:focus, select:focus, textarea:focus {
     }
 }
 
+.flash-message-container {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    width: auto;
+    max-width: 90%;
+    text-align: center;
+}
+
+.flash-message {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 5px;
+    animation: slideDownFadeOut 4s ease-out forwards;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Animation */
+@keyframes slideDownFadeOut {
+    0% {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    10% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    80% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+}

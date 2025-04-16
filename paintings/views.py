@@ -9,7 +9,15 @@ from .forms import UserProfileForm
 import re
 import datetime
 from django.contrib.auth import logout as auth_logout
-
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.template.loader import render_to_string
+from django.core.mail import send_mail
+from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.core.mail import EmailMultiAlternatives
+from django.utils.html import strip_tags
 
 
 
@@ -23,6 +31,7 @@ def home(request):
 def signup(request):
     if request.method == 'POST':
         identifier = request.POST.get('identifier')
+        email = request.POST.get('email')
         password = request.POST.get('password')
         confirm_password = request.POST.get('Confirm Password')
 
@@ -53,6 +62,7 @@ def signup(request):
             # Create new user
             user = UserSignup(
                 phoneorusername=identifier,
+                email=email,
                 password=make_password(password)  # Hash the password
             )
             user.save()
@@ -105,7 +115,7 @@ def user_dashboard(request):
 
 # My Profile page------------------------------------>
 
-# views.py
+
 def myprofile(request):
     user_id = request.session.get('user_id')
 
@@ -126,8 +136,13 @@ def myprofile(request):
             form.save()
             messages.success(request, "Profile updated successfully.")
             return redirect('myprofile')
+    
+        else:
+            print("Form Errors:", form.errors)  # Debugging
+
     else:
         form = UserProfileForm(instance=profile)
+    
 
     # For "Member since" and name
     created_at = profile.created_at
@@ -151,3 +166,64 @@ def user_logout(request):
     request.session.flush()
     messages.success(request, "You have been logged out successfully.")
     return redirect('login')
+
+
+
+
+# forgot password page------------------------------------>
+def forgot_password(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        try:
+            user = UserSignup.objects.get(email=email)
+
+            # Create reset link
+            reset_link = request.build_absolute_uri(f"/reset_password/{user.id}/")
+
+            # Render email templates
+            html_content = render_to_string('emails/reset_password_email.html', {
+                'user': user,
+                'reset_link': reset_link,
+            })
+            text_content = strip_tags(html_content)
+
+            subject = "Reset your ArtBhavan password"
+            from_email = settings.EMAIL_HOST_USER
+            to = [email]
+
+            # Compose email
+            email_message = EmailMultiAlternatives(subject, text_content, from_email, to)
+            email_message.attach_alternative(html_content, "text/html")
+            email_message.send()
+
+            messages.success(request, "A reset link has been sent to your email.")
+            return redirect('forgot_password')
+
+        except UserSignup.DoesNotExist:
+            messages.error(request, "No account found with that email.")
+
+    return render(request, 'forgot_password.html')
+
+# Reset password page------------------------------------>
+def reset_password(request, uid):
+    try:
+        user = UserSignup.objects.get(id=uid)
+    except UserSignup.DoesNotExist:
+        messages.error(request, "Invalid reset link.")
+        return redirect('login')
+
+    if request.method == 'POST':
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+
+        if new_password != confirm_password:
+            messages.error(request, "Passwords do not match.")
+        elif len(new_password) < 6:
+            messages.error(request, "Password should be at least 6 characters.")
+        else:
+            user.password = make_password(new_password)
+            user.save()
+            messages.success(request, "Password reset successfully! Please login.")
+            return redirect('login')
+
+    return render(request, 'reset_password.html')

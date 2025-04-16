@@ -14,7 +14,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/loginscript.js' %}"></script>
 </head>
 <body>
 
@@ -28,17 +28,20 @@
         </div>
     </nav>
 
-    <!-- Login Form Section -->
     {% if messages %}
-    <div class="messages">
+    <div class="flash-message-container">
         {% for message in messages %}
-            <p class="alert alert-{{ message.tags }}">{{ message }}</p>
+            <div class="flash-message alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
         {% endfor %}
     </div>
-    {% endif %}
+{% endif %}
+
+    
 
 
-
+<!-- Login Form Section -->
     <div class="container" style="width: 400px;">
         <div class="text-content">
             <h1>Get Started Now</h1>
@@ -53,7 +56,7 @@
                 
             </form>
 
-            <p><a href="#">Forgot Password?</a></p>
+            <p><a href="{% url 'forgot_password' %}">Forgot Password?</a></p>
 
             <div class="divider">
                 <span>OR</span>
