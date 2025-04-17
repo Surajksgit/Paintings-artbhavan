@@ -1,0 +1,28 @@
+<!-- artwork_detail.html -->
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ artwork.title }}</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    
+</head>
+<body>
+<div class="container my-5">
+    <div class="row g-5">
+        <div class="col-md-6">
+            <img src="{{ artwork.image.url }}" class="img-fluid rounded shadow-sm">
+        </div>
+        <div class="col-md-6">
+            <h2 class="mb-3">{{ artwork.title }}</h2>
+            <h5 class="text-muted">{{ artwork.category }}</h5>
+            <h4 class="text-success fw-bold mb-3">₹{{ artwork.price }}</h4>
+            <p class="lead">{{ artwork.description }}</p>
+            <button class="btn btn-primary">Add to Cart</button>
+        </div>
+    </div>
+</div>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

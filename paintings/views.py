@@ -1,6 +1,6 @@
 # views.py
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password, check_password
 from .models import UserSignup
@@ -18,6 +18,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.mail import EmailMultiAlternatives
 from django.utils.html import strip_tags
+from .models import Artwork
 
 
 
@@ -227,3 +228,28 @@ def reset_password(request, uid):
             return redirect('login')
 
     return render(request, 'reset_password.html')
+
+
+
+
+# Collection page------------------------------------>
+def collection_view(request):
+    artworks = Artwork.objects.all()
+    category = request.GET.get('category')
+    sort = request.GET.get('sort')
+
+    
+
+    if category:
+        artworks = artworks.filter(category=category)
+    if sort == 'low':
+        artworks = artworks.order_by('price')
+    elif sort == 'high':
+        artworks = artworks.order_by('-price')
+
+    return render(request, 'collection.html', {'artworks': artworks})
+
+
+def artwork_detail(request, artwork_id):
+    artwork = get_object_or_404(Artwork, id=artwork_id)
+    return render(request, 'artwork_detail.html', {'artwork': artwork})

@@ -12,7 +12,8 @@ urlpatterns = [
     path('logout/', views.user_logout, name='logout'),
     path('forgot_password/', views.forgot_password, name='forgot_password'),
     path('reset_password/<str:uidb64>/<str:token>/', views.reset_password, name='reset_password'),
-
+    path('collection/', views.collection_view, name='collection'),
+    path('artwork/<int:artwork_id>/', views.artwork_detail, name='artwork_detail'),
 
 
 
