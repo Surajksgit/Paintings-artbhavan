@@ -271,6 +271,8 @@ def collection_view(request):
     return render(request, 'collection.html', {'artworks': artworks})
 
 
+
+# Artwork detail page------------------------------------>
 def artwork_detail(request, artwork_id):
     artwork = get_object_or_404(Artwork, id=artwork_id)
     return render(request, 'artwork_detail.html', {'artwork': artwork})

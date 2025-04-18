@@ -52,6 +52,8 @@ class Artwork(models.Model):
     image = models.ImageField(upload_to='artworks/')
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    height = models.PositiveIntegerField(help_text="Height in cm")
+    width = models.PositiveIntegerField(help_text="Width in cm")
     description = models.TextField(blank=True, null=True)
     
     def __str__(self):
