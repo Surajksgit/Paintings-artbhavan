@@ -67,6 +67,27 @@ def signup(request):
                 password=make_password(password)  # Hash the password
             )
             user.save()
+
+            # Send professional welcome email
+            send_mail(
+                subject=" Welcome to ArtBhavan – Your Art Journey Begins Here!",
+                message=(
+                    f"Dear {identifier},\n\n"
+                    "Thank you for signing up with ArtBhavan!\n\n"
+                    "We’re thrilled to have you join our creative community. "
+                    "Your account has been successfully created.\n\n"
+                    "Login now and start exploring a wide range of beautiful artworks, curated just for you.\n\n"
+                    "Explore. Discover. Collect.\n\n"
+                    "Warm regards,\n"
+                    "Team ArtBhavan\n"
+                    "Website: www.artbhavan.in\n"
+                    "Email: support@artbhavan.in"
+                ),
+                from_email='artbhavan@gmail.com',
+                recipient_list=[email],
+                fail_silently=False,
+            )
+
             
             messages.success(request, 'Account created successfully! Please login.')
             return redirect('login')
@@ -241,7 +262,7 @@ def collection_view(request):
     
 
     if category:
-        artworks = artworks.filter(category=category)
+        artworks = artworks.filter(category__iexact=category)
     if sort == 'low':
         artworks = artworks.order_by('price')
     elif sort == 'high':

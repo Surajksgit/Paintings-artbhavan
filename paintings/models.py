@@ -42,10 +42,10 @@ class UserProfile(models.Model):
 # Artworks------------------------------------>
 class Artwork(models.Model):
     CATEGORY_CHOICES = [
-        ('sketch', 'Sketch'),
-        ('portrait', 'Portrait'),
-        ('oil paint', 'Oil Painting'),
-        ('digital art', 'Digital Art'),
+        ('Sketches', 'Sketches'),
+        ('Portraits', 'Portraits'),
+        ('Oil Paintings', 'Oil Paintings'),
+        ('Digital Art', 'Digital Art'),
     ]
 
     title = models.CharField(max_length=200)
