@@ -14,6 +14,11 @@ urlpatterns = [
     path('reset_password/<str:uidb64>/<str:token>/', views.reset_password, name='reset_password'),
     path('collection/', views.collection_view, name='collection'),
     path('artwork/<int:artwork_id>/', views.artwork_detail, name='artwork_detail'),
+    path('cart/', views.cart_view, name='cart'),
+    path('add-to-cart/<int:artwork_id>/', views.add_to_cart, name='add_to_cart'),
+    path('remove-from-cart/<int:item_id>/', views.remove_from_cart, name='remove_from_cart'),
+    path('checkout/', views.checkout_view, name='checkout'),
+
 
 
 

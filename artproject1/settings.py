@@ -140,3 +140,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'artbhavan@gmail.com'
 EMAIL_HOST_PASSWORD = 'aewv svmg ynpb rgvt'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+
+LOGIN_URL = '/login/'  # your login page URL

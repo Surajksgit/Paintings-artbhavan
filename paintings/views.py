@@ -20,6 +20,8 @@ from django.core.mail import EmailMultiAlternatives
 from django.utils.html import strip_tags
 from .models import Artwork
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+from .models import CartItem, Cart
 
 
 
@@ -279,3 +281,39 @@ def collection_view(request):
 def artwork_detail(request, artwork_id):
     artwork = get_object_or_404(Artwork, id=artwork_id)
     return render(request, 'artwork_detail.html', {'artwork': artwork})
+
+
+# Cart page------------------------------------>
+
+@login_required
+def cart_view(request):
+    cart, created = Cart.objects.get_or_create(user=request.user)
+    return render(request, 'cart.html', {'cart': cart})
+
+@login_required
+def add_to_cart(request, artwork_id):
+    artwork = get_object_or_404(Artwork, id=artwork_id)
+    cart, created = Cart.objects.get_or_create(user=request.user)
+
+    cart_item, created = CartItem.objects.get_or_create(cart=cart, artwork=artwork)
+    if not created:
+        cart_item.quantity += 1
+        cart_item.save()
+    return redirect('cart')
+
+@login_required
+def remove_from_cart(request, item_id):
+    cart_item = get_object_or_404(CartItem, id=item_id, cart=request.user.cart)
+    cart_item.delete()
+    return redirect('cart')
+
+@login_required
+def checkout_view(request):
+    cart = request.user.cart
+    total = cart.total_price()
+
+    # You can implement payment logic here
+    # For now, clear the cart
+    cart.items.all().delete()
+
+    return render(request, 'checkout.html', {'total': total})

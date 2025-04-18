@@ -1,0 +1,16 @@
+<!-- checkout.html -->
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checkout | ArtBhavan</title>
+</head>
+<body>
+    <div class="container mt-5 text-center">
+        <h2>Thank you for your purchase!</h2>
+        <p>Your order total was: <strong>₹{{ total }}</strong></p>
+        <a href="{% url 'collection' %}" class="btn btn-primary mt-3">Continue Shopping</a>
+    </div>
+</body>
+</html>

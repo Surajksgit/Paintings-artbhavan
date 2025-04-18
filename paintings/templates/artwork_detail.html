@@ -26,7 +26,15 @@
             <h6 class="text-muted" style="font-size: 0.9rem; color: #fff;">Size : {{ artwork.height }}cm x {{ artwork.width }}cm</h6>
             <h4 class="text-success fw-bold mb-3"> ₹{{ artwork.price }}</h4>
             <p class="lead">{{ artwork.description }}</p>
-            <button class="btn ">Add to Cart</button>
+            {% if user.is_authenticated %}
+    <form method="post" action="{% url 'add_to_cart' artwork.id %}">
+        {% csrf_token %}
+        <button class="btn ">Add to Cart</button>
+    </form>
+{% else %}
+    <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-warning">Login to Add to Cart</a>
+{% endif %}
+
         </div>
     </div>
 </div>

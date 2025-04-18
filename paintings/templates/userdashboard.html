@@ -34,7 +34,7 @@
     <div class="sub-navbar">
         <div class="left-links">
             
-            <a href="#collection">Collection</a>
+            <a href="{% url 'collection' %}">Collection</a>
             <a href="#new">New</a>
             <a href="#">Orders</a>
             <a href="#">Wishlist</a>
@@ -42,10 +42,10 @@
             <div class="dropdown">
                 <a href="#" class="dropbtn">Categories <i class="fa fa-chevron-down"></i></a>
                 <div class="dropdown-content">
-                    <a style="color: #fff;" href="#sketches">Sketches</a>
-                    <a style="color: #fff;" href="#portraits">Portraits</a>
-                    <a style="color: #fff;" href="#oil-paintings">Oil Paintings</a>
-                    <a style="color: #fff;" href="#digital-art">Digital Art</a>
+                    <a style="color: #fff;" href="{% url 'collection' %}?category=Sketches">Sketches</a>
+                    <a style="color: #fff;" href="{% url 'collection' %}?category=Portraits">Portraits</a>
+                    <a style="color: #fff;" href="{% url 'collection' %}?category=Oil Paintings">Oil Paintings</a>
+                    <a style="color: #fff;" href="{% url 'collection' %}?category=Digital Art">Digital Art</a>
                 </div>
                 
             </div>
@@ -55,7 +55,7 @@
                 <i class="fas fa-bell"></i>
             </a>
         
-            <a href="#cart" style="padding-right: 20px; cursor: pointer;text-decoration: none;">
+            <a href="{% url 'cart' %}" style="padding-right: 20px; cursor: pointer;text-decoration: none;">
                 <i class="fas fa-shopping-cart"></i>
             </a>
         
