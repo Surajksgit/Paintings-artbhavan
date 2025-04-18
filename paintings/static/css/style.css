@@ -58,7 +58,8 @@ body {
     width: 100%;
     background: #2b2828;
     padding: 10px 50px;
-    padding-top: 25px;
+    padding-top: 30px;
+    padding-bottom: 25px;
     display: flex;
     justify-content: space-between;
     align-items: center;

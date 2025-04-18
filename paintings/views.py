@@ -19,6 +19,7 @@ from django.contrib.auth import get_user_model
 from django.core.mail import EmailMultiAlternatives
 from django.utils.html import strip_tags
 from .models import Artwork
+from django.db.models import Q
 
 
 
@@ -256,13 +257,15 @@ def reset_password(request, uid):
 # Collection page------------------------------------>
 def collection_view(request):
     artworks = Artwork.objects.all()
+    query = request.GET.get('q')
     category = request.GET.get('category')
     sort = request.GET.get('sort')
 
-    
+    if query:
+        artworks = artworks.filter(title__icontains=query)
 
     if category:
-        artworks = artworks.filter(category__iexact=category)
+        artworks = artworks.filter(category=category)
     if sort == 'low':
         artworks = artworks.order_by('price')
     elif sort == 'high':

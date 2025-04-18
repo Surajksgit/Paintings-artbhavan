@@ -44,20 +44,20 @@
             <div class="dropdown">
                 <a href="#" class="dropbtn">Categories <i class="fa fa-chevron-down"></i></a>
                 <div class="dropdown-content">
-                    <a href="#sketches">Sketches</a>
-                    <a href="#portraits">Portraits</a>
-                    <a href="#oil-paintings">Oil Paintings</a>
+                    <a href="{% url 'collection' %}?category=Sketches">Sketches</a>
+                    <a href="{% url 'collection' %}?category=Portraits">Portraits</a>
+                    <a href="{% url 'collection' %}?category=Oil Paintings">Oil Paintings</a>
                     <!-- <a href="#watercolors">Watercolors</a> -->
-                    <a href="#digital-art">Digital Art</a>
+                    <a href="{% url 'collection' %}?category=Digital Art">Digital Art</a>
                 </div>
             </div>
         </div>
 
         <!-- Search Bar -->
-        <div class="search-container">
+        <!-- <div class="search-container">
             <input type="text" class="search-bar" placeholder="Search for artworks...">
             <i class="fa fa-search search-icon"></i>
-        </div>
+        </div> -->
         <div class="logd">
             <a  class="login-btn" style=" color: #222; text-decoration: none;" >Login</a>
             <div class="logd-content">
@@ -73,7 +73,9 @@
             <div class="text-content">
                 <h1 style="margin-left: 50px;">Welcome to ArtBhavan</h1>
                 <p style="margin-left: 50px;">Explore a collection of handpicked artwork . Own a masterpiece today!</p>
+                <a href="{% url 'collection' %}">
                 <button class="btn" style="margin-left: 50px;">Explore Art</button>
+                </a>
             </div>
 
             <!-- Carousel -->
