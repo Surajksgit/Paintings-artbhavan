@@ -1,0 +1,51 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f9f9f9;
+}
+.checkout-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 50px;
+    gap: 30px;
+}
+.form-section {
+    flex: 1 1 60%;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+.summary-section {
+    flex: 1 1 35%;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    height: fit-content;
+}
+.brand-logo {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #d2691e;
+    margin-bottom: 30px;
+}
+.form-label {
+    font-weight: 600;
+}
+.btn-dark {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+.total-amount {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    .checkout-container {
+        flex-direction: column;
+        padding: 15px;
+    }
+}

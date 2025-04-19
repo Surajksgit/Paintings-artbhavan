@@ -3,6 +3,7 @@ from . import views  # Ensure views are correctly imported
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 urlpatterns = [
     path('', views.home, name='arthome'),  # Example path
     path('signup/', views.signup, name='signup'),
@@ -18,6 +19,7 @@ urlpatterns = [
     path('add-to-cart/<int:artwork_id>/', views.add_to_cart, name='add_to_cart'),
     path('remove-from-cart/<int:item_id>/', views.remove_from_cart, name='remove_from_cart'),
     path('checkout/', views.checkout_view, name='checkout'),
+    
 
 
 

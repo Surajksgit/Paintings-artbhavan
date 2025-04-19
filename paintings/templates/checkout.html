@@ -1,16 +1,90 @@
 <!-- checkout.html -->
 
+
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Checkout | ArtBhavan</title>
+    
+    <link rel="stylesheet" href="{% static 'css/checkout.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+
+   
 </head>
 <body>
-    <div class="container mt-5 text-center">
-        <h2>Thank you for your purchase!</h2>
-        <p>Your order total was: <strong>₹{{ total }}</strong></p>
-        <a href="{% url 'collection' %}" class="btn btn-primary mt-3">Continue Shopping</a>
+<div class="container checkout-container">
+    <div class="form-section">
+        <div class="brand-logo">ArtBhavan</div>
+        <h5 class="mb-4">Shipping Address</h5>
+        <form method="post" action="#">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input type="text" class="form-control" value="{{ user.username }}" readonly>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" value="{{ user.email }}" readonly>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Phone</label>
+                <input type="text" class="form-control" value="{{ user.profile.phone }}" readonly>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Country</label>
+                <input type="text" class="form-control" value="{{ user.profile.country }}" readonly>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">State</label>
+                <input type="text" class="form-control" value="{{ user.profile.state }}" readonly>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">City</label>
+                <input type="text" class="form-control" value="{{ user.profile.city }}" readonly>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Address</label>
+                <input type="text" class="form-control" value="{{ user.profile.address }}" readonly>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Pin Code</label>
+                <input type="text" class="form-control" value="{{ user.profile.pin_code }}" readonly>
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+                <a href="{% url 'cart' %}" class="btn btn-outline-secondary">Return to Cart</a>
+                <button type="submit" class="btn btn-dark">Continue to Payment</button>
+            </div>
+        </form>
     </div>
+
+    <div class="summary-section">
+        <h6 class="mb-3">Order Summary</h6>
+        {% for item in cart.items.all %}
+            <div class="d-flex justify-content-between mb-2">
+                <div>{{ item.artwork.title }} x{{ item.quantity }}</div>
+                <div>₹{{ item.total_price }}</div>
+            </div>
+        {% endfor %}
+        <hr>
+        <div class="d-flex justify-content-between mb-2">
+            <div>Subtotal</div>
+            <div>₹{{ cart.total_price }}</div>
+        </div>
+        <div class="d-flex justify-content-between mb-2">
+            <div>Shipping</div>
+            <div>Calculated at next step</div>
+        </div>
+        <hr>
+        <div class="d-flex justify-content-between total-amount">
+            <div>Total</div>
+            <div>₹{{ cart.total_price }}</div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

@@ -143,4 +143,6 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 
-LOGIN_URL = '/login/'  # your login page URL
+# settings.py
+LOGIN_URL = '/login/'  # or whatever your login path is
+
