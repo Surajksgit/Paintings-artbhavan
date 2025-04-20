@@ -22,7 +22,7 @@ from .models import Artwork
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-
+from .models import Cart, CartItem
 
 
 
@@ -287,3 +287,52 @@ def artwork_detail(request, artwork_id):
 
 
 # Cart page------------------------------------>
+
+
+# Add to cart
+def add_to_cart(request, artwork_id):
+    artwork = get_object_or_404(Artwork, id=artwork_id)
+    user = request.session.get('user_id')
+    user_instance = get_object_or_404(UserSignup, id=user)
+
+    cart, _ = Cart.objects.get_or_create(user=user_instance)
+    item, created = CartItem.objects.get_or_create(cart=cart, artwork=artwork)
+
+    if not created:
+        item.quantity += 1
+        item.save()
+
+    messages.success(request, f'"{artwork.title}" has been added to your cart!')   
+
+    return redirect('cart')
+
+# View cart
+def cart_view(request):
+    user = request.session.get('user_id')
+    user_instance = get_object_or_404(UserSignup, id=user)
+    cart, _ = Cart.objects.get_or_create(user=user_instance)
+    return render(request, 'cart.html', {'cart': cart})
+
+# Remove item
+def remove_from_cart(request, item_id):
+    item = get_object_or_404(CartItem, id=item_id)
+    item.delete()
+    messages.success(request, "Artwork removed from cart successfully!")
+    return redirect('cart')
+
+# Checkout
+def checkout_view(request):
+    user = request.session.get('user_id')
+    user_instance = get_object_or_404(UserSignup, id=user)
+    profile = get_object_or_404(UserProfile, user=user_instance)
+    cart = get_object_or_404(Cart, user=user_instance)
+
+    return render(request, 'checkout.html', {
+        'user': user_instance,
+        'cart': cart,
+        'user': {
+            'username': user_instance.phoneorusername,
+            'email': user_instance.email,
+            'profile': profile
+        }
+    })

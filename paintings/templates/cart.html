@@ -14,6 +14,18 @@
     
 </head>
 <body>
+    {% if messages %}
+    <div class="flash-message-container">
+        {% for message in messages %}
+            <div class="flash-message alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+
+
     <div class="container mt-5">
         <h2 style="color: #fff; font-weight: bold;" class="text-center mb-4"><i class="fas fa-palette me-2"></i>Your Cart</h2>
         

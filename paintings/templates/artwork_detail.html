@@ -28,7 +28,8 @@
             <p class="lead">{{ artwork.description }}</p>
             
             
-                <button class="btn ">Add to Cart</button>
+            <a href="{% url 'add_to_cart' artwork.id %}" class="btn btn-dark">Add to Cart</a>
+
            
         
         </div>
