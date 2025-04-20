@@ -88,6 +88,19 @@
     </div>
   </div>
 
+
+  <!-- Full Page Logout Confirmation Popup -->
+<div id="backConfirmPopup" class="back-popup-overlay">
+    <div class="back-popup-content">
+        <h3><i class="fas fa-sign-out-alt me-2"></i>Make sure you're logged out</h3>
+        <div class="popup-buttons">
+            <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+            <button class="btn btn-secondary" onclick="closeBackPopup()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+
   {% if messages %}
     <div class="flash-message-container">
         {% for message in messages %}

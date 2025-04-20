@@ -27,9 +27,11 @@
             <h4 class="text-success fw-bold mb-3"> ₹{{ artwork.price }}</h4>
             <p class="lead">{{ artwork.description }}</p>
             
-            
-            <a href="{% url 'add_to_cart' artwork.id %}" class="btn btn-dark">Add to Cart</a>
-
+        {% if request.session.user_id %}    
+            <a href="{% url 'add_to_cart' artwork.id %}" class="btn ">Add to Cart</a>
+        {% else %}
+            <a href="{% url 'signup' %}" class="btn ">Sign up to Add to Cart</a>
+        {% endif %}
            
         
         </div>

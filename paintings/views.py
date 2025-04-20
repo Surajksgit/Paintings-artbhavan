@@ -291,6 +291,13 @@ def artwork_detail(request, artwork_id):
 
 # Add to cart
 def add_to_cart(request, artwork_id):
+    # Check if user is logged in
+    if 'user_id' not in request.session:
+        messages.warning(request, "Please sign up or log in to add items to your cart.")
+        return redirect('signup')  # Redirect to signup if not logged in
+
+
+    # Continue with cart logic if logged in
     artwork = get_object_or_404(Artwork, id=artwork_id)
     user = request.session.get('user_id')
     user_instance = get_object_or_404(UserSignup, id=user)
