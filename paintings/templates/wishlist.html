@@ -1,0 +1,24 @@
+<!-- wishlist.html -->
+
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <h2>{{ user.username }}'s Wishlist</h2>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+        {% for artwork in wishlist.artworks.all %}
+        <div class="col">
+            <div class="card">
+                <img src="{{ artwork.image.url }}" class="card-img-top" alt="{{ artwork.title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ artwork.title }}</h5>
+                    <p class="card-text">₹{{ artwork.price }}</p>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No artworks in your wishlist.</p>
+        {% endfor %}
+    </div>
+

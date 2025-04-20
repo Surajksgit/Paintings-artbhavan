@@ -25,8 +25,8 @@
         <div><a href="/" style="color: #fff; font-size: 1.5rem;">ArtBhavan</a></div>
         <div>
             <a href="/">Home</a>
-            <a href="#about" class="ms-4">About</a>
-            <a href="#contact" class="ms-4">Contact</a>
+            <a href="{% url 'about' %}" class="ms-4">About</a>
+            <a href="{% url 'contact' %}" class="ms-4">Contact</a>
         </div>
     </nav>
 
@@ -37,7 +37,7 @@
             <a href="{% url 'collection' %}">Collection</a>
             <a href="#new">New</a>
             <a href="#">Orders</a>
-            <a href="#">Wishlist</a>
+            <a href="{% url 'wishlist' %}">Wishlist</a>
             <!-- Categories Dropdown -->
             <div class="dropdown">
                 <a href="#" class="dropbtn">Categories <i class="fa fa-chevron-down"></i></a>

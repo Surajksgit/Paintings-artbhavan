@@ -187,3 +187,19 @@ body {
 .popup-buttons .btn {
     margin: 5px;
 }
+
+
+/* Wishlist Icon */
+.wishlist-icon {
+    font-size: 1.5rem;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.wishlist-icon:hover {
+    background-color: #f44336; /* Change to red or any color you prefer */
+}

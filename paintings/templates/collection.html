@@ -17,8 +17,8 @@
         <div><strong style="margin-left: 70px; font-size: 1.5rem; ">ArtBhavan</strong></div>
         <div>
             <a href="/">Home</a>
-            <a href="#about">About</a>
-            <a href="#contact" style="margin-right: 50px;">Contact</a>
+            <a href="{% url 'about' %}">About</a>
+            <a href="{% url 'contact' %}" style="margin-right: 50px;">Contact</a>
         </div>
     </nav>
 
@@ -26,8 +26,10 @@
     <div class="sub-nav">
         <div class="nav-links">
             <a href="#new" class="">New</a>
+            <a href="{% url 'userdashboard' %}" class="">Dashboard</a>
+
         </div>
-        <h2 class="text-center" style="color: #fff; position: relative;left: 530px; font-family: Arial, sans-serif; font-weight: bold; font-size: 1.5rem;">
+        <h2 class="text-center" style="color: #fff; position: relative;left: 400px; font-family: Arial, sans-serif; font-weight: bold; font-size: 1.5rem;">
             {% if request.GET.category %}
                 {{ request.GET.category }}
             {% else %}

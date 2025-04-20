@@ -1,0 +1,74 @@
+body {
+    background: linear-gradient(to right, #2b2828, #4e4c4c);
+    color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+}
+.about-header {
+    text-align: center;
+    padding: 60px 20px 30px;
+}
+.about-header p {
+    font-size: 1rem;
+    color: #fff;
+}
+.about-header h1 {
+    font-weight: bold;
+    font-size: 2.8rem;
+    color: #f8f9fa;
+}
+.about-section {
+    padding: 40px 20px;
+}
+.about-section img {
+    max-width: 100%;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+.about-text {
+    padding: 20px;
+    color: #fff;
+}
+.highlight {
+    color: #f39c12;
+}
+.mission-card {
+    background-color: #2b2828;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    color: #f8f9fa;
+    transition: transform 0.3s;
+}
+.mission-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+.footer {
+    background-color: #070707;
+    padding: 30px 0;
+    color: #aaa;
+    text-align: center;
+}
+
+
+/* Main Navbar */
+.main-navbar {
+    background: linear-gradient(to right, #070707, #180e0e);
+    color: white;
+    padding: 15px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-navbar a {
+    color: #f39c12;
+    text-decoration: none;
+    font-size: 17px;
+    margin: 0 15px;
+    font-weight: bold;
+    transition: color 0.3s ease-in-out;
+}
+.main-navbar a:hover {
+    color: #fff;
+}

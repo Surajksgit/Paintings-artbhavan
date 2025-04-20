@@ -18,7 +18,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.mail import EmailMultiAlternatives
 from django.utils.html import strip_tags
-from .models import Artwork
+from .models import Artwork, Wishlist
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -343,3 +343,32 @@ def checkout_view(request):
             'profile': profile
         }
     })
+
+
+# Add to wishlist------------------------------------->
+
+def wishlist_view(request):
+    return render(request, 'wishlist.html')
+
+
+
+
+@login_required
+def add_to_wishlist(request, artwork_id):
+    artwork = Artwork.objects.get(id=artwork_id)
+    
+    # Add the artwork to the user's wishlist (assuming the user is logged in)
+    wishlist, created = Wishlist.objects.get_or_create(user=request.user)
+    wishlist.artworks.add(artwork)
+    
+    # Redirect back to the collection page or the wishlist page
+    return redirect('collection')  # Redirect back to collection page (or wishlist page)
+
+
+# About page------------------------------------->
+def about(request):
+    return render(request, 'about.html')
+
+# Contact page------------------------------------->
+def contact(request):
+    return render(request, 'contact.html')

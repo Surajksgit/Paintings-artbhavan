@@ -33,7 +33,12 @@
             <a href="{% url 'signup' %}" class="btn ">Sign up to Add to Cart</a>
         {% endif %}
            
-        
+        <!-- Add to Wishlist Button -->
+        {% if request.session.user_id %}
+        <a href="{% url 'add_to_wishlist' artwork.id %}" class="btn btn-outline-danger mb-2">Add to Wishlist</a>
+    {% else %}
+        <a href="{% url 'signup' %}" class="btn btn-outline-danger mb-2">Sign up to Add to Wishlist</a>
+    {% endif %}
         </div>
     </div>
 </div>

@@ -27,6 +27,12 @@
 
 
     <div class="container mt-5">
+        <div class="mb-3">
+        <<a href="{% url 'collection' %}" class="btn btn-outline-warning">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+        </div>
+        
         <h2 style="color: #fff; font-weight: bold;" class="text-center mb-4"><i class="fas fa-palette me-2"></i>Your Cart</h2>
         
         {% if cart.items.all %}
