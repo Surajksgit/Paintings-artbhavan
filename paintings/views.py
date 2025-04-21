@@ -348,14 +348,33 @@ def checkout_view(request):
 # Add to wishlist------------------------------------->
 
 def wishlist_view(request):
-    return render(request, 'wishlist.html')
+    if 'user_id' not in request.session:
+        messages.warning(request, "Please log in to view your wishlist.")
+        return redirect('login')
+    
+    user_id = request.session['user_id']
+    user = get_object_or_404(UserSignup, id=user_id)
+
+    wishlist, created = Wishlist.objects.get_or_create(user=request.user)
+    artworks = wishlist.artworks.all()
+    return render(request, 'wishlist.html', {
+        'wishlist': wishlist,
+        'artworks': artworks,
+        'user': user,
+    })
 
 
 
 
-@login_required
+# add to wishlist
 def add_to_wishlist(request, artwork_id):
-    artwork = Artwork.objects.get(id=artwork_id)
+    if 'user_id' not in request.session:
+        messages.warning(request, "Please log in to view your wishlist.")
+        return redirect('login')
+    
+    user_id = request.session['user_id']
+    user = get_object_or_404(UserSignup, id=user_id)
+    artwork = get_object_or_404(Artwork, id=artwork_id)
     
     # Add the artwork to the user's wishlist (assuming the user is logged in)
     wishlist, created = Wishlist.objects.get_or_create(user=request.user)
@@ -363,6 +382,26 @@ def add_to_wishlist(request, artwork_id):
     
     # Redirect back to the collection page or the wishlist page
     return redirect('collection')  # Redirect back to collection page (or wishlist page)
+
+
+# remove from wishlist
+def remove_from_wishlist(request, artwork_id):
+    if 'user_id' not in request.session:
+        messages.warning(request, "Please log in to view your wishlist.")
+        return redirect('login')
+    
+    user_id = request.session['user_id']
+    user = get_object_or_404(UserSignup, id=user_id)
+    artwork = get_object_or_404(Artwork, id=artwork_id)
+    
+    # Remove the artwork from the user's wishlist
+    wishlist, created = Wishlist.objects.get_or_create(user=request.user)
+    wishlist.artworks.remove(artwork)
+    
+    # Redirect back to the collection page or the wishlist page
+    return redirect('wishlist')
+
+    
 
 
 # About page------------------------------------->
