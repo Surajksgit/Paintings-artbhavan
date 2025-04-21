@@ -18,11 +18,11 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.mail import EmailMultiAlternatives
 from django.utils.html import strip_tags
-from .models import Artwork, Wishlist
-from django.db.models import Q
+from .models import Artwork
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import Cart, CartItem
+# from .models import Wishlist
 
 
 
@@ -333,6 +333,8 @@ def checkout_view(request):
     user_instance = get_object_or_404(UserSignup, id=user)
     profile = get_object_or_404(UserProfile, user=user_instance)
     cart = get_object_or_404(Cart, user=user_instance)
+    
+    
 
     return render(request, 'checkout.html', {
         'user': user_instance,
@@ -347,59 +349,54 @@ def checkout_view(request):
 
 # Add to wishlist------------------------------------->
 
+# Add to Wishlist
+# def add_to_wishlist(request, artwork_id):
+#     if 'user_id' not in request.session:
+#         return redirect('login')
+
+#     user = UserSignup.objects.get(id=request.session['user_id'])
+#     artwork = get_object_or_404(Artwork, id=artwork_id)
+
+#     # Prevent duplicates
+#     if Wishlist.objects.filter(user=user, artwork=artwork).exists():
+#         messages.info(request, 'This item is already in your wishlist.')
+#     else:
+#         Wishlist.objects.create(user=user, artwork=artwork)
+#         messages.success(request, 'Added to wishlist!')
+
+#     return redirect('wishlist')
+
+
+# View Wishlist
+# def wishlist_view(request):
+#     if 'user_id' not in request.session:
+#         return redirect('login')
+
+#     user = UserSignup.objects.get(id=request.session['user_id'])
+#     wishlist_items = Wishlist.objects.filter(user=user)
+
+#     return render(request, 'wishlist.html', {'wishlist_items': wishlist_items})
+
+
+# Remove from Wishlist
+# def remove_from_wishlist(request, artwork_id):
+#     if 'user_id' not in request.session:
+#         return redirect('login')
+
+#     user = UserSignup.objects.get(id=request.session['user_id'])
+#     Wishlist.objects.filter(user=user, artwork_id=artwork_id).delete()
+#     messages.success(request, 'Item removed from wishlist.')
+
+#     return redirect('wishlist')
+
+
+
+
+
+# write wish list view 
 def wishlist_view(request):
-    if 'user_id' not in request.session:
-        messages.warning(request, "Please log in to view your wishlist.")
-        return redirect('login')
-    
-    user_id = request.session['user_id']
-    user = get_object_or_404(UserSignup, id=user_id)
+    return render(request, 'wishlist.html')
 
-    wishlist, created = Wishlist.objects.get_or_create(user=request.user)
-    artworks = wishlist.artworks.all()
-    return render(request, 'wishlist.html', {
-        'wishlist': wishlist,
-        'artworks': artworks,
-        'user': user,
-    })
-
-
-
-
-# add to wishlist
-def add_to_wishlist(request, artwork_id):
-    if 'user_id' not in request.session:
-        messages.warning(request, "Please log in to view your wishlist.")
-        return redirect('login')
-    
-    user_id = request.session['user_id']
-    user = get_object_or_404(UserSignup, id=user_id)
-    artwork = get_object_or_404(Artwork, id=artwork_id)
-    
-    # Add the artwork to the user's wishlist (assuming the user is logged in)
-    wishlist, created = Wishlist.objects.get_or_create(user=request.user)
-    wishlist.artworks.add(artwork)
-    
-    # Redirect back to the collection page or the wishlist page
-    return redirect('collection')  # Redirect back to collection page (or wishlist page)
-
-
-# remove from wishlist
-def remove_from_wishlist(request, artwork_id):
-    if 'user_id' not in request.session:
-        messages.warning(request, "Please log in to view your wishlist.")
-        return redirect('login')
-    
-    user_id = request.session['user_id']
-    user = get_object_or_404(UserSignup, id=user_id)
-    artwork = get_object_or_404(Artwork, id=artwork_id)
-    
-    # Remove the artwork from the user's wishlist
-    wishlist, created = Wishlist.objects.get_or_create(user=request.user)
-    wishlist.artworks.remove(artwork)
-    
-    # Redirect back to the collection page or the wishlist page
-    return redirect('wishlist')
 
     
 
@@ -411,3 +408,40 @@ def about(request):
 # Contact page------------------------------------->
 def contact(request):
     return render(request, 'contact.html')
+
+def shopnow(request, artwork_id):
+    artwork = get_object_or_404(Artwork, id=artwork_id)
+    return render(request, 'shopnow.html', {'artwork': artwork})
+
+
+# Payment processing
+def process_payment(request):
+    if request.method == 'POST':
+        method = request.POST.get('payment_method')
+
+        if method == 'card':
+            # You can validate card details here
+            card_number = request.POST.get('card_number')
+            expiry = request.POST.get('expiry')
+            cvv = request.POST.get('cvv')
+            # Do processing or redirect
+            messages.success(request, "Card payment processed successfully.")
+            return redirect('order_success')
+
+        elif method == 'upi':
+            upi_id = request.POST.get('upi_id')
+            # Validate UPI
+            messages.success(request, f"UPI {upi_id} verified. Order placed!")
+            return redirect('order_success')
+
+        elif method == 'cod':
+            messages.success(request, "Order placed with Cash on Delivery.")
+            return redirect('order_success')
+
+    return redirect('checkout')
+
+
+
+# Order success
+def order_success(request):
+    return render(request, 'order_success.html')

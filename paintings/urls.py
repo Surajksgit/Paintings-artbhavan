@@ -19,11 +19,14 @@ urlpatterns = [
     path('add-to-cart/<int:artwork_id>/', views.add_to_cart, name='add_to_cart'),
     path('remove-from-cart/<int:item_id>/', views.remove_from_cart, name='remove_from_cart'),
     path('checkout/', views.checkout_view, name='checkout'),
-    path('wishlist/', views.wishlist_view, name='wishlist'),
-    path('add_to_wishlist/<int:artwork_id>/', views.add_to_wishlist, name='add_to_wishlist'),
-    path('wishlist/remove/<int:artwork_id>/', views.remove_from_wishlist, name='remove_from_wishlist'),
+    # path('wishlist/', views.wishlist_view, name='wishlist'),
+    # path('add_to_wishlist/<int:artwork_id>/', views.add_to_wishlist, name='add_to_wishlist'),
+    # path('wishlist/remove/<int:artwork_id>/', views.remove_from_wishlist, name='remove_from_wishlist'),
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
+    path('shopnow/<int:artwork_id>/', views.shopnow, name='shopnow'),
+    path('process_payment/', views.process_payment, name='process_payment'),
+    path('order-success/', views.order_success, name='order_success'),
 
 
 

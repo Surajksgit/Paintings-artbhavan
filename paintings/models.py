@@ -85,9 +85,3 @@ class CartItem(models.Model):
         return f"{self.artwork.title} in cart"
 
 # Wishlist------------------------------------>
-class Wishlist(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    artworks = models.ManyToManyField(Artwork)
-
-    def __str__(self):
-        return f"{self.user.username}'s Wishlist"

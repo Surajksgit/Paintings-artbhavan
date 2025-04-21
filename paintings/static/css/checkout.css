@@ -1,51 +1,106 @@
 body {
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #f9f9f9;
+    background: linear-gradient(to right, #4e4c4c, #4e4c4c);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 40px 10px;
 }
 .checkout-container {
     display: flex;
     flex-wrap: wrap;
-    margin-top: 50px;
     gap: 30px;
+    justify-content: center;
 }
-.form-section {
-    flex: 1 1 60%;
-    background: #ffffff;
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.05);
-}
-.summary-section {
-    flex: 1 1 35%;
-    background: #ffffff;
+.form-section, .summary-section {
+    background-color: #2b2828;
     padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.05);
-    height: fit-content;
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    max-width: 500px;
+    width: 100%;
 }
 .brand-logo {
-    font-size: 2rem;
+    font-size: 32px;
     font-weight: bold;
-    color: #d2691e;
-    margin-bottom: 30px;
+    color: #f39c12;
+    margin-bottom: 20px;
+}
+.mb-4  {
+    color: #ccc;
 }
 .form-label {
-    font-weight: 600;
+    font-weight: 500;
+    color: #ccc;
 }
-.btn-dark {
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: 600;
+.form-control[readonly] {
+    background-color: #ccc;
+}
+.btn-continue {
+    background-color: #4e4c4c;
+    border: none;
+    color: #f39c12;
+    font-weight: bold;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    text-decoration: none;
+}
+.btn-continue:hover {
+    background-color: #f39c12;
+    color: #4e4c4c;
 }
 .total-amount {
-    font-size: 1.2rem;
     font-weight: bold;
-    color: #333;
+    font-size: 18px;
+    color: #5ec163;
 }
 
 @media (max-width: 768px) {
     .checkout-container {
         flex-direction: column;
-        padding: 15px;
+        align-items: center;
     }
+}
+
+.btn-return {
+    background-color: #f39c12;
+    border: none;
+    color: #2b2828;
+    font-weight: bold;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    text-decoration: none;
+}
+.btn-return:hover {
+    background-color: #4e4c4c;
+    color: #f39c12;
+}
+.mb-3 {
+    color: #ccc;
+}
+
+.mb-2{
+    color: #ccc;
+}
+
+.shipping-address {
+    background-color: #2b2828;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    max-width: 500px;
+    width: 100%;
+    color: #ccc;
+}
+
+#cardDetails,
+#upiDetails {
+    transition: all 0.3s ease;
+}
+.payment-option {
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
