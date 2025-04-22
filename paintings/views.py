@@ -21,7 +21,7 @@ from django.utils.html import strip_tags
 from .models import Artwork
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .models import Cart, CartItem
+from .models import Cart, CartItem, Order
 # from .models import Wishlist
 
 
@@ -439,6 +439,18 @@ def process_payment(request):
             return redirect('order_success')
 
     return redirect('checkout')
+
+
+# My orders
+def my_orders(request):
+    if 'user_id' not in request.session:
+        return redirect('login')
+
+    user = get_object_or_404(UserSignup, id=request.session['user_id'])
+    orders = Order.objects.filter(user=user).order_by('-ordered_at')
+    return render(request, 'my_orders.html', {'orders': orders})
+
+
 
 
 

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<div class="container mt-5">
+    <h3 class="mb-4">My Orders</h3>
+    {% if orders %}
+        <ul class="list-group">
+            {% for order in orders %}
+                <li class="list-group-item">
+                    <strong>{{ order.artwork.title }}</strong> – {{ order.quantity }} piece(s)<br>
+                    Ordered on: {{ order.ordered_at|date:"M d, Y - H:i" }}<br>
+                    Payment: {{ order.payment_method }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You haven't placed any orders yet.</p>
+    {% endif %}
+</div>
+</body>
+</html>

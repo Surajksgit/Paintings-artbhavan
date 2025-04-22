@@ -26,6 +26,7 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('shopnow/<int:artwork_id>/', views.shopnow, name='shopnow'),
     path('process_payment/', views.process_payment, name='process_payment'),
+    path('my_orders/', views.my_orders, name='my_orders'),
     path('order-success/', views.order_success, name='order_success'),
 
 
