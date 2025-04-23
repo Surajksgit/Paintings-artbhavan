@@ -49,6 +49,7 @@ p {
     background-color: #f39c12;
     border: none;
     color: #4e4c4c;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 .btn-home:hover {
