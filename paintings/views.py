@@ -419,24 +419,48 @@ def process_payment(request):
     if request.method == 'POST':
         method = request.POST.get('payment_method')
 
+        # Fetch user and cart
+        user = get_object_or_404(UserSignup, id=request.session['user_id'])
+        cart = Cart.objects.filter(user=user).first()
+
+        if not cart or not cart.items.exists():
+            messages.error(request, "Your cart is empty.")
+            return redirect('cart')
+
+
+        # Optional: Validate card/upi details
         if method == 'card':
-            # You can validate card details here
-            card_number = request.POST.get('card_number')
-            expiry = request.POST.get('expiry')
-            cvv = request.POST.get('cvv')
-            # Do processing or redirect
+            if not (request.POST.get('card_number') and request.POST.get('expiry') and request.POST.get('cvv')):
+                messages.error(request, "Invalid card details.")
+                return redirect('checkout')
             messages.success(request, "Card payment processed successfully.")
-            return redirect('order_success')
 
         elif method == 'upi':
-            upi_id = request.POST.get('upi_id')
-            # Validate UPI
-            messages.success(request, f"UPI {upi_id} verified. Order placed!")
-            return redirect('order_success')
+            if not request.POST.get('upi_id'):
+                messages.error(request, "Invalid UPI ID.")
+                return redirect('checkout')
+            messages.success(request, f"UPI {request.POST.get('upi_id')} verified. Order placed!")
 
         elif method == 'cod':
             messages.success(request, "Order placed with Cash on Delivery.")
-            return redirect('order_success')
+        else:
+            messages.error(request, "Invalid payment method.")
+            return redirect('checkout')
+
+        # Create Order for each item in cart
+        for item in cart.items.all():
+            Order.objects.create(
+                user=user,
+                artwork=item.artwork,
+                quantity=item.quantity,
+                payment_method=method,
+                ordered_at=datetime.datetime.now()
+            )
+
+        # Clear the cart
+        cart.items.all().delete()
+
+        return redirect('order_success')
 
     return redirect('checkout')
 

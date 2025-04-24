@@ -1,0 +1,89 @@
+body {
+    background: #4e4c4c;
+}
+.order-card {
+    transition: transform 0.2s ease-in-out;
+}
+.order-card:hover {
+    transform: scale(1.02);
+}
+.order-icon {
+    font-size: 1.5rem;
+    color: #0d6efd;
+}
+.empty-state {
+    text-align: center;
+    margin-top: 100px;
+}
+.order-heading {    
+    color: #ccc;
+    position: relative;
+    right: 650px;
+   
+}
+
+
+/* Reuse your navbar styles here if not globally included */
+.nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to right, #070707, #180e0e);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.nav a {
+    color: #f39c12;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 17px;
+    font-weight: bold;
+    transition: color 0.3s ease-in-out;
+    padding: 5px;
+    position: relative;
+    left: 40px;
+}
+
+.nav a:hover {
+    color: #fff;
+}
+
+.nav strong {
+    margin-left: 70px;
+    font-size: 1.5rem;
+}
+/* Sub-Navbar */
+.sub-nav {
+    position: relative;
+    top: 55px; /* Push below navbar */
+    width: 100%;
+    background: #2b2828;
+    padding: 10px 50px;
+    padding-top: 34px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.nav-links a {
+    text-decoration: none;
+    margin: 0 15px;
+    color: #f39c12;
+    font-size: 16px;
+    font-weight: bold;
+    transition: color 0.3s ease-in-out;
+    position: relative;
+    bottom: 8px;
+}
+
+.nav-links a:hover {
+    color: #fff;
+}
+

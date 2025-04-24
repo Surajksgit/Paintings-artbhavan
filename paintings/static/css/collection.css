@@ -28,6 +28,10 @@ body {
     font-size: 17px;
     font-weight: bold;
     transition: color 0.3s ease-in-out;
+    padding: 5px;
+    position: relative;
+    left: 45px;
+    
 }
 
 .nav a:hover {
@@ -244,3 +248,4 @@ body {
         padding: 3px 8px;
     }
 }
+

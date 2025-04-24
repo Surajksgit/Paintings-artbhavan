@@ -285,3 +285,16 @@ section {
   }
   
   
+
+  /* Loader styling */
+  #loading-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    width: 0%;
+    background-color: orange;
+    z-index: 9999;
+    transition: width 0.4s ease, opacity 0.3s ease;
+}
+
