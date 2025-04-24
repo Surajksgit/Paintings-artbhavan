@@ -87,11 +87,19 @@ class CartItem(models.Model):
 
 # Order------------------------------------>
 class Order(models.Model):
+    STATUS_CHOICES = [
+        ('confirmed', 'Order Confirmed'),
+        ('shipped', 'Shipped'),
+        ('out_for_delivery', 'Out for Delivery'),
+        ('delivered', 'Delivered'),
+    ]
     user = models.ForeignKey(UserSignup, on_delete=models.CASCADE)
     artwork = models.ForeignKey(Artwork, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
     ordered_at = models.DateTimeField(auto_now_add=True)
     payment_method = models.CharField(max_length=50)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='confirmed')
+
 
     def __str__(self):
         return f"{self.user.phoneorusername} - {self.artwork.title}"

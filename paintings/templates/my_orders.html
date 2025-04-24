@@ -33,35 +33,82 @@
         <h2 class="order-heading" style="color: #fff; font-family: Arial, sans-serif; font-weight: bold; font-size: 1.5rem;">My Orders</h2>
         </div>
 
-
-<div class="container py-5">
-    
-
-    {% if orders %}
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            {% for order in orders %}
-                <div class="col">
-                    <div class="card order-card shadow-sm border-0 h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <i class="bi bi-bag-check-fill order-icon"></i>
-                                {{ order.artwork.title }}
-                            </h5>
-                            <p class="card-text mb-1"><strong>Quantity:</strong> {{ order.quantity }} piece(s)</p>
-                            <p class="card-text mb-1"><strong>Ordered on:</strong> {{ order.ordered_at|date:"M d, Y - H:i" }}</p>
-                            <p class="card-text"><strong>Payment:</strong> {{ order.payment_method }}</p>
+        <div class="container py-5 mt-5">
+            
+        
+            {% if orders %}
+                <div class="row row-cols-1 g-4">
+                    {% for order in orders %}
+                        <div class="col">
+                            <div class="card shadow-sm p-3 ">
+                                <div class="row g-3 align-items-center">
+                                    <div class="col-md-9">
+                                        <small class="text-muted d-block mb-2">Order ID - {{ order.id }}</small>
+                                        <h5 class="fw-semibold">{{ order.artwork.title|truncatechars:55 }}</h5>
+                                        <p class="mb-1 text-muted"><strong>Seller:</strong> ArtBhavan</p>
+                                        <p class="fw-bold fs-5 text-success mb-3">₹{{ order.artwork.price }}</p>
+        
+                                        <!-- Status Section -->
+                                        <div class="mb-2">
+                                            <div class="d-flex align-items-start mt-2">
+                                                <div class="me-2 {% if order.status in 'confirmed shipped out_for_delivery delivered' %}text-success{% else %}text-muted{% endif %}">
+                                                    <i class="bi {% if order.status in 'confirmed shipped out_for_delivery delivered' %}bi-check-circle-fill{% else %}bi-circle{% endif %}"></i>
+                                                </div>
+                                                <div>
+                                                    <strong>Order Confirmed</strong>, {{ order.ordered_at|date:"D M d" }}
+                                                </div>
+                                            </div>
+        
+                                            <div class="d-flex align-items-start mt-2">
+                                                <div class="me-2 {% if order.status in 'shipped out_for_delivery delivered' %}text-success{% else %}text-muted{% endif %}">
+                                                    <i class="bi {% if order.status in 'shipped out_for_delivery delivered' %}bi-check-circle-fill{% else %}bi-circle{% endif %}"></i>
+                                                </div>
+                                                <div>
+                                                    <strong>Shipped</strong><br>
+                                                    {% if order.status in 'shipped out_for_delivery delivered' %}
+                                                        Your item is on the way.
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+        
+                                            <div class="d-flex align-items-start mt-2">
+                                                <div class="me-2 {% if order.status in 'out_for_delivery delivered' %}text-success{% else %}text-muted{% endif %}">
+                                                    <i class="bi {% if order.status in 'out_for_delivery delivered' %}bi-check-circle-fill{% else %}bi-circle{% endif %}"></i>
+                                                </div>
+                                                <div>
+                                                    <strong>Out for Delivery</strong>
+                                                </div>
+                                            </div>
+        
+                                            <div class="d-flex align-items-start mt-2">
+                                                <div class="me-2 {% if order.status == 'delivered' %}text-success{% else %}text-muted{% endif %}">
+                                                    <i class="bi {% if order.status == 'delivered' %}bi-check-circle-fill{% else %}bi-circle{% endif %}"></i>
+                                                </div>
+                                                <div>
+                                                    <strong>Delivered</strong>
+                                                </div>
+                                            </div>
+                                    </div>
+        
+                                    <!-- Product Image -->
+                                    <div class="col-md-3 text-end">
+                                        <img src="{{ order.artwork.image.url }}" class="img-fluid  border" style="max-width: 250px;" alt="Artwork Image">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
+            {% else %}
+                <div class="text-center mt-5">
+                    <img src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png" alt="No Orders" style="width: 150px;">
+                    <h5 class="mt-4 text-secondary">You haven't placed any orders yet.</h5>
+                    <a href="{% url 'collection' %}" class="btn btn-outline-primary mt-3 px-4">Explore Artworks</a>
+                </div>
+            {% endif %}
         </div>
-    {% else %}
-        <div class="empty-state">
-            <img src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png" alt="No Orders" style="width: 150px;">
-            <h5 class="mt-4 text-secondary">You haven't placed any orders yet.</h5>
-        </div>
-    {% endif %}
-</div>
+        
+
 
 <!-- Bootstrap Icons CDN -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
