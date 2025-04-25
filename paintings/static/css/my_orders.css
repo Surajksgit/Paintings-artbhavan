@@ -82,9 +82,11 @@ body {
 
 
 .card {
-    background-color: #fefefe;
+    background-color:#2b2828;
     transition: box-shadow 0.3s ease;
-    max-width: 550px;
+    max-width: 600px;
+    max-height:350px ;
+    margin-bottom: 30px;
 }
 .card:hover {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
@@ -94,11 +96,20 @@ body {
 }
 .bi-circle {
     font-size: 1rem;
+    color: #ccc;
 }
 
 .img-fluid {
 
     position: relative;
-    left: 250px;
+    left: 300px;
     bottom: 250px;
+}
+
+
+.fw-semibold {
+    color: #ccc;
+}
+.order-status {
+    color: #ccc;
 }
