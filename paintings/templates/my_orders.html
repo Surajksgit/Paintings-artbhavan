@@ -48,15 +48,43 @@
                                         <h5 class="fw-semibold">{{ order.artwork.title|truncatechars:55 }}</h5>
                                         <p class="order-status mb-1"><strong>Seller:</strong> ArtBhavan</p>
                                         <p class="fw-bold fs-5 text-success mb-3">₹{{ order.artwork.price }}</p>
+
+                                        <!-- Product Image -->
+                                    <div class="col-md-3 text-end">
+                                        <img src="{{ order.artwork.image.url }}" class="img-fluid border" style="max-width: 250px; cursor: pointer;" alt="Artwork Image"
+                                            onclick="openImageModal('{{ order.artwork.image.url }}')">
+
+                                    </div>
+
+                                        <!-- Progress Path Line -->
+                                        <div class="progress-tracker mt-4 mb-2">
+                                            <div class="step {% if order.status in 'confirmed shipped out_for_delivery delivered' %}active{% endif %}">
+                                                <div class="icon"><i class="bi bi-check-circle-fill"></i></div>
+                                                <p>Order Confirmed</p>
+                                            </div>
+                                            <div class="step {% if order.status in 'shipped out_for_delivery delivered' %}active{% endif %}">
+                                                <div class="icon"><i class="bi bi-box-seam"></i></div>
+                                                <p>Shipped</p>
+                                            </div>
+                                            <div class="step {% if order.status in 'out_for_delivery delivered' %}active{% endif %}">
+                                                <div class="icon"><i class="bi bi-truck"></i></div>
+                                                <p>Out for Delivery</p>
+                                            </div>
+                                            <div class="step {% if order.status == 'delivered' %}active{% endif %}">
+                                                <div class="icon"><i class="bi bi-house-check"></i></div>
+                                                <p>Delivered</p>
+                                            </div>
+                                        </div>
+
         
                                         <!-- Status Section -->
-                                        <div class="mb-2">
+                                        <div class="mb-2 status-section" >
                                             <div class="d-flex align-items-start mt-2">
                                                 <div class="me-2 {% if order.status in 'confirmed shipped out_for_delivery delivered' %}text-success{% else %}text-muted{% endif %}">
                                                     <i class="bi {% if order.status in 'confirmed shipped out_for_delivery delivered' %}bi-check-circle-fill{% else %}bi-circle{% endif %}"></i>
                                                 </div>
                                                 <div class="order-status">
-                                                    <strong >Order Confirmed</strong>, {{ order.ordered_at|date:"D M d" }}
+                                                    <strong >Order Confirmed</strong> {{ order.ordered_at|date:"D M d" }}
                                                 </div>
                                             </div>
         
@@ -67,7 +95,7 @@
                                                 <div class="order-status">
                                                     <strong >Shipped</strong><br>
                                                     {% if order.status in 'shipped out_for_delivery delivered' %}
-                                                        Your item is dispatched, {{ order.ordered_at|date:"D M d" }}
+                                                        Your item is dispatched {{ order.ordered_at|date:"D M d" }}
                                                     {% endif %}
                                                 </div>
                                             </div>
@@ -89,17 +117,37 @@
                                                     <i class="bi {% if order.status == 'delivered' %}bi-check-circle-fill{% else %}bi-circle{% endif %}"></i>
                                                 </div>
                                                 <div class="order-status">
-                                                    <strong class="order-status">Delivered</strong>
+                                                    <strong class="order-status">Delivered</strong><br>
+                                                    {% if order.status == 'delivered' %}
+                                                        Your item has been delivered on {{ order.ordered_at|date:"D M d" }}
+                                                    {% endif %}
                                                 </div>
                                             </div>
-                                    </div>
-        
-                                    <!-- Product Image -->
-                                    <div class="col-md-3 text-end">
-                                        <img src="{{ order.artwork.image.url }}" class="img-fluid border" style="max-width: 250px; cursor: pointer;" alt="Artwork Image"
-                                            onclick="openImageModal('{{ order.artwork.image.url }}')">
 
+                                            
+                                            <!-- Default dropend button -->
+                                            <div class="btn-group dropend" style="position: static;margin-top: 20px;">
+                                                <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" 
+                                                aria-expanded="false" style="padding-left: 60px; padding-right: 60px; background-color: #2b2828;">
+                                                Order summary
+                                                </button>
+                                                <ul  class="dropdown-menu p-3 text-white"
+                                                    style="margin-left: 10px; background-color: #2b2828; width: 300px;border: 1px solid #ccc;">
+                                                    <li class="mb-2"><strong>Order ID:</strong> {{ order.id }}</li>
+                                                    <li class="mb-2"><strong>Artwork:</strong> {{ order.artwork.title }}</li>
+                                                    <li class="mb-2"><strong>Quantity:</strong> x{{ order.quantity }}</li>
+                                                    <li class="mb-2"><strong>Price:</strong> ₹{{ order.artwork.price }}</li>
+                                                    <li class="mb-2"><strong>Tax:</strong> ₹0.00</li>
+                                                    <li class="mb-2"><strong>Secure Packaging:</strong> ₹500</li>
+                                                    <li class="mb-2 border-top pt-2"><strong>Total Price:</strong> ₹{{ order.artwork.price|add:500 }}</li>
+
+                                                </ul>
+                                            </div>
                                     </div>
+
+                                    
+        
+                                    
                                 </div>
                             </div>
                         </div>
