@@ -33,8 +33,12 @@
 
 <div class="container position-relative">
     <!-- Close Button -->
-    <a href="{% url 'userdashboard' %}" style="background-color: #fff;" class="btn-close position-absolute top-0 end-0 m-3" aria-label="Close"></a>
-    
+    <!-- <a href="{% url 'userdashboard' %}" style="background-color: #fff;" class="btn-close position-absolute top-0 end-0 m-3" aria-label="Close"></a> -->
+    <a href="{% url 'userdashboard' %}" class="custom-close-button" aria-label="Close">
+        <span class="tooltip-text">Close</span>
+    </a>
+
+
     <h3 class="profile-header">My Profile</h3>
     
 

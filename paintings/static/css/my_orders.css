@@ -175,3 +175,57 @@ body {
 }
 
 
+
+/* Custom Close Button */
+.custom-close-button {
+    position: relative;
+    left: 1009px;
+    bottom: 560px;
+    display: flex;
+    align-items: center;
+    background-color:transparent; /* red background */
+    width: 30px;
+    height: 30px;
+    text-decoration: none;
+    background-color: #2b2828;
+}
+.custom-close-button:hover {
+    background-color: #dc3545;
+    
+}
+
+
+.custom-close-button::after {
+    content: '✕'; /* "X" symbol */
+    color: white;
+    flex: 1;
+    text-align: center;
+    font-size: 15px;
+    line-height: 44px;
+}
+
+
+/* Tooltip */
+.tooltip-text {
+    visibility: hidden;
+    width: 60px;
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #ccc;
+    text-align: center;
+    padding: 4px 6px;
+    position: absolute;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.custom-close-button:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}

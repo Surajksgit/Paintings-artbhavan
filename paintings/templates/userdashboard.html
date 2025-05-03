@@ -51,19 +51,19 @@
             </div>
         </div>
         <div class="right-icons">
-            <a href="#notification" style="padding-right: 20px; cursor: pointer; text-decoration: none; ">
+            <a href="#notification" style="padding-right: 20px; cursor: pointer; text-decoration: none;" title="Notifications">
                 <i class="fas fa-bell"></i>
             </a>
         
-            <a href="{% url 'cart' %}" style="padding-right: 20px; cursor: pointer;text-decoration: none;">
+            <a href="{% url 'cart' %}" style="padding-right: 20px; cursor: pointer;text-decoration: none;" title="Cart">
                 <i class="fas fa-shopping-cart"></i>
             </a>
         
-            <a href="{% url 'myprofile' %}" style="cursor: pointer;text-decoration: none;">
+            <a href="{% url 'myprofile' %}" style="cursor: pointer;text-decoration: none;"title="Profile">
                 <i class="fas fa-user"></i>
             </a>
             <!-- Logout Trigger (opens the modal) -->
-            <a href="{% url 'logout' %}" data-bs-toggle="modal" data-bs-target="#logoutModal" style="padding-right: 20px; padding-left: 20px; cursor: pointer; text-decoration: none;">
+            <a href="{% url 'logout' %}" data-bs-toggle="modal" data-bs-target="#logoutModal" style="padding-right: 20px; padding-left: 20px; cursor: pointer; text-decoration: none;"title="Logout">
                 <i class="fas fa-sign-out-alt"></i>
             </a>
         </div>

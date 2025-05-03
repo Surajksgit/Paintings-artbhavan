@@ -137,7 +137,7 @@
                                                     <li class="mb-2"><strong>Artwork:</strong> {{ order.artwork.title }}</li>
                                                     <li class="mb-2"><strong>Quantity:</strong> x{{ order.quantity }}</li>
                                                     <li class="mb-2"><strong>Price:</strong> ₹{{ order.artwork.price }}</li>
-                                                    <li class="mb-2"><strong>Tax:</strong> ₹0.00</li>
+                                                    <li class="mb-2"><strong>GST:</strong> ₹0.00</li>
                                                     <li class="mb-2"><strong>Secure Packaging:</strong> ₹500</li>
                                                     <li class="mb-2 border-top pt-2"><strong>Total Price:</strong> ₹{{ order.artwork.price|add:500 }}</li>
 
@@ -169,7 +169,9 @@
                   <img id="popupImage" src="" alt="Artwork"
                        class=""
                        style="height: 600px; width: 510px; object-fit: cover; position: relative; left: 400px;top: 40px;">
-                  <button type="button" class="btn-close" style="position: relative; left: 350px;bottom: 230px;background-color: white;" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <a  class="custom-close-button"  data-bs-dismiss="modal" aria-label="Close">
+                    <span class="tooltip-text">Close</span>
+                  </a>
                 </div>
               </div>
             </div>
