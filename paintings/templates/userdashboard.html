@@ -114,11 +114,45 @@
   
 
    
-    <!-- Dashboard Content -->
-<div class="dashboard-content">
-    <h2>Welcome, {{ user_name }}!</h2>
-    <p>Here you can manage your orders, profile settings.</p>
+    
+<!-- Dashboard Content -->
+<div class="dashboard-content position-relative overflow-hidden">
+    <!-- Carousel (Background) -->
+    <div id="dashboardCarousel" class="carousel slide carousel-fade position-absolute w-100 h-100" data-bs-ride="carousel" style="z-index: 0;">
+        <div class="carousel-inner h-100">
+            <div class="carousel-item active h-100">
+                <img src="{% static 'image/gibili2.jpg' %}" class="d-block w-100 h-100 object-fit-cover" alt="carousel1">
+            </div>
+            <div class="carousel-item h-100">
+                <img src="{% static 'image/gibili4.jpg' %}" class="d-block w-100 h-100 object-fit-cover" alt="carousel2">
+            </div>
+            <div class="carousel-item h-100">
+                <img src="{% static 'image/gibili6.jpg' %}" class="d-block w-100 h-100 object-fit-cover" alt="carousel3">
+            </div>
+            <div class="carousel-item h-100">
+                <img src="{% static 'image/gibili3.jpg' %}" class="d-block w-100 h-100 object-fit-cover" alt="carousel4">
+            </div>
+        </div>
+
+        <!-- Carousel Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#dashboardCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#dashboardCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <!-- Foreground Content -->
+    <div class="position-relative text-white" style="z-index: 2;">
+        <h2>Welcome, {{ user_name }}!</h2>
+        <p>Here you can manage your orders, profile settings.</p>
+    </div>
 </div>
+
+
 
 </body>
 </html>

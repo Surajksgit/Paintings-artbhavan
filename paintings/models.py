@@ -103,3 +103,21 @@ class Order(models.Model):
 
     def __str__(self):
         return f"{self.user.phoneorusername} - {self.artwork.title}"
+
+
+
+
+# Wishlist------------------------------------>
+
+
+
+
+    
+
+
+
+    
+
+
+
+

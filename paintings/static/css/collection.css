@@ -199,6 +199,7 @@ body {
 .card-body {
     padding: 16px 12px;
     background-color: #2b2828;
+    
 }
 
 .artwork-title {
@@ -217,11 +218,11 @@ body {
 
 .artwork-category {
     display: inline-block;
-    background-color: #f39c12;
-    color: white;
+    background-color: #4e4c4c;
+    color: #f39c12;
     font-size: 0.85rem;
     padding: 4px 12px;
-    border-radius: 20px;
+    /* border-radius: 20px; */
     font-weight: 500;
     margin-top: 4px;
     

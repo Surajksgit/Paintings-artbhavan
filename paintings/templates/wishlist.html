@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ user.phoneorusername }}'s Wishlist</title>
+    <title>{{ user_name }}'s Wishlist</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Bootstrap CSS -->
@@ -27,6 +27,17 @@
         <span class="visually-hidden">Loading...</span>
     </div>
 </div>
+
+
+{% if messages %}
+    <div class="flash-message-container">
+        {% for message in messages %}
+            <div class="flash-message alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
 
 <div class="container my-5">
     <div class="wishlist-header">

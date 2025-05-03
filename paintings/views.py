@@ -3,7 +3,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password, check_password
-from .models import UserSignup
+from .models import UserSignup 
 from .models import UserProfile
 from .forms import UserProfileForm
 import re
@@ -394,8 +394,8 @@ def checkout_view(request):
 
 
 # write wish list view 
-def wishlist_view(request):
-    return render(request, 'wishlist.html')
+# def wishlist_view(request):
+#     return render(request, 'wishlist.html')
 
 
     
