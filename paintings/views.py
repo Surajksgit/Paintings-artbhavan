@@ -22,6 +22,7 @@ from .models import Artwork
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import Cart, CartItem, Order
+import random
 # from .models import Wishlist
 
 
@@ -138,7 +139,28 @@ def user_dashboard(request):
         return redirect('login')
     
     user_name = request.session.get('user_identifier', 'User')
-    return render(request, 'userdashboard.html', {'user_name': user_name})
+
+    # Get filters from query params
+    category = request.GET.get('category')
+    sort_by = request.GET.get('sort_by')
+
+    artworks = Artwork.objects.all()
+
+    if category:
+        artworks = artworks.filter(category=category)
+
+    if sort_by == 'low_to_high':
+        artworks = artworks.order_by('price')
+    elif sort_by == 'high_to_low':
+        artworks = artworks.order_by('-price')
+
+    return render(request, 'userdashboard.html', {
+        'user_name': user_name,
+        'artworks': artworks,
+        'selected_category': category,
+        'selected_sort': sort_by
+
+        })
 
 
 # My Profile page------------------------------------>
@@ -481,3 +503,7 @@ def my_orders(request):
 # Order success
 def order_success(request):
     return render(request, 'order_success.html')
+
+
+
+

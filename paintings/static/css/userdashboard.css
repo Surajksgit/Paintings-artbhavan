@@ -262,3 +262,161 @@ body {
     justify-content: center;
     padding-left: 40px;
 }
+
+
+
+.artwork-card {
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    border: none;
+}
+
+.artwork-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+.artwork-img-wrapper {
+    position: relative;
+    background-color: #180e0e;
+    height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.artwork-img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    transition: transform 0.4s ease;
+}
+
+.artwork-card:hover .artwork-img {
+    transform: scale(1.08);
+}
+
+.favorite-btn {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: transparent;
+    border: none;
+    font-size: 1.4rem;
+    color: #888;
+    z-index: 10;
+    border-radius: 50%;
+    padding: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: color 0.3s ease;
+}
+
+.favorite-btn:hover {
+    color: #f39c12;
+}
+
+.card-body {
+    padding: 16px 12px;
+    background-color: #2b2828;
+    
+}
+
+.artwork-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 6px;
+}
+
+.artwork-price {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #28a745;
+    margin-bottom: 6px;
+}
+
+.artwork-category {
+    display: inline-block;
+    background-color: #4e4c4c;
+    color: #f39c12;
+    font-size: 0.85rem;
+    padding: 4px 12px;
+    /* border-radius: 20px; */
+    font-weight: 500;
+    margin-top: 4px;
+    
+    /* Hidden by default */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Show when hovering over the entire card */
+.artwork-card:hover .artwork-category {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    .artwork-img-wrapper {
+        height: 220px;
+    }
+
+    .artwork-title {
+        font-size: 1rem;
+    }
+
+    .artwork-price {
+        font-size: 0.95rem;
+    }
+
+    .artwork-category {
+        font-size: 0.75rem;
+        padding: 3px 10px;
+    }
+
+    .favorite-btn {
+        font-size: 1.2rem;
+        padding: 4px;
+    }
+}
+
+
+
+.filter-select {
+    background-color: #2b2828;
+    color: #fff;
+    border: 2px solid #ffc107;
+    border-radius: 0.75rem;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.filter-select:focus {
+    border-color: #ffdd57;
+    box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
+    background-color: #4e4c4c;
+    
+}
+
+.filter-select option {
+    background-color: #2b2828;
+    color: #f39c12;
+    font-weight: 500;
+}
+.applyfilter {
+    background-color: #f39c12;
+    color:#2b2828;
+    padding: 0.5rem 1rem;
+}
+.applyfilter:hover {
+    background-color: #2b2828;
+    color: #f39c12;
+}
