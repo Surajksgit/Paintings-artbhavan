@@ -12,36 +12,69 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="{% static 'js/artwork_detail.js' %}"></script>
     
 </head>
 <body>
-<div class="container my-5">
-    <div class="row g-5">
-        <div class="col-md-6">
-            <img src="{{ artwork.image.url }}" class="img-fluid rounded shadow-sm">
+
+    <div class="container artwork-container">
+        <!-- Left Side: Thumbnails + Main Image -->
+        <div class="d-flex">
+            <div class="thumbnail-list me-3">
+                <img src="{{ artwork.image.url }}" class="active" onclick="changeImage(this)">
+                {% if artwork.thumbnail_2 %}
+                    <img src="{{ artwork.thumbnail_2.url }}" onclick="changeImage(this)">
+                {% endif %}
+                {% if artwork.thumbnail_3 %}
+                    <img src="{{ artwork.thumbnail_3.url }}" onclick="changeImage(this)">
+                {% endif %}
+                {% if artwork.thumbnail_4 %}
+                    <img src="{{ artwork.thumbnail_4.url }}" onclick="changeImage(this)">
+                {% endif %}
+            </div>
+            <div class="main-image">
+                <img id="mainArtworkImage" src="{{ artwork.image.url }}" alt="{{ artwork.title }}">
+            </div>
         </div>
-        <div class="col-md-6">
-            <h2 class="mb-3"> {{ artwork.title }}</h2>
-            <h5 class="text-muted " >Category : {{ artwork.category }}</h5>
-            <h6 class="text-muted" style="font-size: 0.9rem; color: #fff;">Size : {{ artwork.height }}cm x {{ artwork.width }}cm</h6>
-            <h4 class="text-success fw-bold mb-3"> ₹{{ artwork.price }}</h4>
-            <p class="lead">{{ artwork.description }}</p>
-            
-        {% if request.session.user_id %}    
-            <a href="{% url 'add_to_cart' artwork.id %}" class="btn ">Add to Cart</a>
-        {% else %}
-            <a href="{% url 'signup' %}" class="btn ">Sign up to Add to Cart</a>
-        {% endif %}
-           
-        <!-- Add to Wishlist Button -->
-        {% if request.session.user_id %}
-        <a href="#" class="btn btn-outline-danger mb-2">Add to Wishlist</a>
-    {% else %}
-        <a href="{% url 'signup' %}" class="btn btn-outline-danger mb-2">Sign up to Add to Wishlist</a>
-    {% endif %}
+    
+        <!-- Right Side: Info -->
+<div class="artwork-info">
+    <div class="artwork-title">{{ artwork.title }}</div>
+    <div class="artwork-price">Rs. {{ artwork.price }}</div>
+    <div class="fw-bold mb-3 text-muted">Rolled Canvas</div>
+
+    <form method="post" action="{% url 'add_to_cart' artwork.id %}">
+        {% csrf_token %}
+        
+        <div class="mb-4">
+            <label for="size" class="form-label fw-bold">Size</label>
+            <select class="form-select" name="size" id="size">
+                <option value="9x12 Inches">9x12 Inches</option>
+                <option value="12x18 Inches">12x18 Inches</option>
+                <option value="18x24 Inches">18x24 Inches</option>
+            </select>
         </div>
+
+        <div class="mb-4 d-flex align-items-center" style="padding-top: 10px;">
+            <label for="quantity" class="form-label fw-bold me-3">Quantity</label>
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="updateQty(-1)">-</button>
+            <input type="number" name="quantity" id="quantity" value="1" min="1" class="form-control mx-2" style="width: 50px;">
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="updateQty(1)">+</button>
+        </div>
+
+        <button type="submit" class="btn add-to-cart-btn w-100 py-2">ADD TO CART</button>
+    </form>
+
+    <div class="desc-text mt-4">
+        {{ artwork.description }}
     </div>
 </div>
+
+
 <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+
+
+
 </body>
 </html>

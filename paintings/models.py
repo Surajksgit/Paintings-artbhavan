@@ -50,6 +50,9 @@ class Artwork(models.Model):
 
     title = models.CharField(max_length=200)
     image = models.ImageField(upload_to='artworks/')
+    thumbnail_2 = models.ImageField(upload_to='artworks/', blank=True, null=True)
+    thumbnail_3 = models.ImageField(upload_to='artworks/', blank=True, null=True)
+    thumbnail_4 = models.ImageField(upload_to='artworks/', blank=True, null=True)
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     height = models.PositiveIntegerField(help_text="Height in cm")
