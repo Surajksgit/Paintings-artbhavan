@@ -31,7 +31,7 @@ body {
     height: auto;
     border: 2px solid transparent;
     cursor: pointer;
-    border-radius: 5px;
+    box-shadow:  #2b2828 0px 0px 10px;
 }
 
 .thumbnail-list img.active {
@@ -41,8 +41,8 @@ body {
 .main-image img {
     width: 460px;
     height: auto;
-    border-radius: 8px;
     object-fit: contain;
+    box-shadow: #000 1px 1px 10px;
 }
 
 .artwork-info {
