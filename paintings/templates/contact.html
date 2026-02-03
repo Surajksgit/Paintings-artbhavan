@@ -1,108 +1,176 @@
-<!-- contact.html -->
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us | ArtBhavan</title>
-    <link rel="stylesheet" href="{% static 'css/contact.css' %}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
-    
-</head>
-<body>
-    <div class="container my-5">
-        <div class="text-center mb-4">
-            <h2 class="contact-heading fw-bold"><i class="fas fa-envelope-open-text me-2"></i>Contact Us</h2>
-            <p style="color: #ccc;">We'd love to hear from you! Whether you have a question, feedback, or just want to say hello.</p>
-        </div>
 
-        <div class="row g-5">
-            <!-- Contact Form -->
-            <div class="col-md-7">
-                <div class="contact-container">
-                    <form method="post">
-                        {% csrf_token %}
-                        <div class="mb-3">
-                            <label class="form-label">Full Name</label>
-                            <input type="text" class="form-control" placeholder="Enter your name" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Email Address</label>
-                            <input type="email" class="form-control" placeholder="Enter your email" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Message</label>
-                            <textarea class="form-control" rows="5" placeholder="Write your message..." required></textarea>
-                        </div>
-                        <div class="text-end">
-                            <button type="submit" class="btn-send mt-3"><i class="fas fa-paper-plane me-1"></i>Send Message</button>
-                        </div>
-                    </form>
-                </div>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Syne:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/modern_contact.css' %}">
+
+    <!-- GSAP & Plugins -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/split-type"></script>
+</head>
+
+<body class="bg-dark">
+
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+    <div class="custom-cursor-follower"></div>
+
+    <!-- Glass Navbar -->
+    <nav class="glass-nav">
+        <div class="nav-container">
+            <a href="/" class="brand-logo">Art<span>Bhavan</span></a>
+            <div class="nav-links d-none d-md-flex gap-4">
+                <a href="/" class="text-decoration-none text-white opacity-75 hover-opacity-100">Home</a>
+                <a href="{% url 'collection' %}"
+                    class="text-decoration-none text-white opacity-75 hover-opacity-100">Collection</a>
+                <a href="{% url 'about' %}"
+                    class="text-decoration-none text-white opacity-75 hover-opacity-100">About</a>
+            </div>
+            <div class="nav-actions">
+                <a href="{% url 'userdashboard' %}"
+                    class="btn btn-sm btn-outline-warning rounded-pill px-4">Dashboard</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contact Hero Section -->
+    <header class="contact-hero">
+        <div class="hero-bg-text">CONNECT</div>
+        <div class="hero-content">
+            <h1 class="contact-title">Start A <span>Conversation</span></h1>
+            <p class="contact-subtitle">Have a vision or a question? Reach out to the ArtBhavan curators. We're here to
+                help you find your next masterpiece.</p>
+        </div>
+    </header>
+
+    <!-- Contact Form & Info Section -->
+    <section class="contact-section">
+        <div class="contact-wrapper">
+            <!-- Form Side -->
+            <div class="contact-form-side">
+                <form method="post" id="contactForm">
+                    {% csrf_token %}
+                    <div class="form-group-modern">
+                        <label class="label-modern">Full Name</label>
+                        <input type="text" name="name" class="input-modern" placeholder="How should we call you?"
+                            required>
+                    </div>
+
+                    <div class="form-group-modern">
+                        <label class="label-modern">Email Address</label>
+                        <input type="email" name="email" class="input-modern" placeholder="name@example.com" required>
+                    </div>
+
+                    <div class="form-group-modern">
+                        <label class="label-modern">Your Message</label>
+                        <textarea name="message" class="input-modern" placeholder="Tell us about your interest..."
+                            required></textarea>
+                    </div>
+
+                    <div class="text-start">
+                        <button type="submit" class="btn-premium">
+                            Send Message
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </form>
             </div>
 
-            <!-- Contact Info -->
-            <div class="col-md-5">
-                <div class="contact-container h-100">
-                    <h5 class="mb-4 text-warning">Get in Touch</h5>
-                    <p style="color: #ccc;" class="contact-info"><i class="fas fa-map-marker-alt"></i>123 Art Street, Kochi, Kerala, India</p>
-                    <p style="color: #ccc;" class="contact-info"><i class="fas fa-phone"></i>+91 123-456-7890</p>
-                    <p style="color: #ccc;" class="contact-info"><i class="fas fa-envelope"></i>artbhavan@gmail.com</p>
-                    <div class="mt-4">
-                        <h6 class="text-warning">Follow Us</h6>
-                        <div class="social-icons mt-2">
-                            <a href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                            <a href="#"><i class="fab fa-pinterest"></i></a>
-                        </div>
+            <!-- Info Side -->
+            <div class="contact-info-side">
+                <h3 class="info-title">Contact <span>Details</span></h3>
+
+                <div class="info-item">
+                    <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="info-text">
+                        <h6>Our Studio</h6>
+                        <p>123 Art Avenue, Fort Kochi<br>Kerala, India 682001</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon"><i class="fas fa-phone"></i></div>
+                    <div class="info-text">
+                        <h6>Call Us</h6>
+                        <p>+91 (484) 2345 678<br>+91 987 654 3210</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="info-text">
+                        <h6>Email Us</h6>
+                        <p>curator@artbhavan.com<br>info@artbhavan.com</p>
+                    </div>
+                </div>
+
+                <div class="social-group-modern">
+                    <h6>Stay Connected</h6>
+                    <div class="social-links">
+                        <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-btn"><i class="fab fa-x-twitter"></i></a>
+                        <a href="#" class="social-btn"><i class="fab fa-pinterest"></i></a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>    
+    </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-about">
-                <h2>ArtBhavan</h2>
-                <p>Your destination for exquisite artworks and handmade collections. Discover creativity at its finest.</p>
+    <!-- Modern Footer -->
+    <footer class="footer-modern">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <div class="footer-logo">Art<span>Bhavan</span></div>
+                <p class="text-secondary">Your destination for exquisite artworks and handmade collections. Discover
+                    creativity at its finest.</p>
             </div>
-    
-            <div class="footer-links">
-                <h3>Quick Links</h3>
-                <ul>
+            <div class="footer-column">
+                <h5>Navigation</h5>
+                <ul class="footer-links-list">
                     <li><a href="/">Home</a></li>
                     <li><a href="{% url 'collection' %}">Collections</a></li>
-                    <li><a href="{% url 'cart' %}">Cart</a></li>
-                    <li><a href="{% url 'about' %}">About</a></li>
-                    
+                    <li><a href="{% url 'about' %}">About Us</a></li>
                 </ul>
             </div>
-    
-            <div class="footer-contact">
-                <h3>Contact</h3>
-                <p><i class="fas fa-phone-alt"></i> +91 123 456 7890</p>
-                <p><i class="fas fa-envelope"></i> artbhavan@gmail.com</p>
-                <p><i class="fas fa-map-marker-alt"></i> Kochi, Kerala, India</p>
+            <div class="footer-column">
+                <h5>Quick Links</h5>
+                <ul class="footer-links-list">
+                    <li><a href="{% url 'cart' %}">Your Cart</a></li>
+                    <li><a href="{% url 'userdashboard' %}">My Account</a></li>
+                </ul>
             </div>
-    
-            <div class="footer-social">
-                <h3>Follow Us</h3>
-                <a href="#fb"><i class="fab fa-facebook-f"></i></a>
-                <a href="#insta"><i class="fab fa-instagram"></i></a>
-                <a href="#X"><i class="fab fa-x-twitter"></i></a>
-                <a href="#pinterest"><i class="fab fa-pinterest-p"></i></a>
+            <div class="footer-column">
+                <h5>Studio Hours</h5>
+                <div class="text-secondary">
+                    <p>Mon - Fri: 9:00 - 18:00</p>
+                    <p>Sat - Sun: 10:00 - 16:00</p>
+                </div>
             </div>
         </div>
-    
-        <div class="footer-bottom">
-            <p>&copy; 2025 <strong>ArtBhavan</strong>. All rights reserved.</p>
+        <div class="text-center mt-5 pt-4 border-top border-secondary opacity-50">
+            <p>&copy; 2026 ArtBhavan. Crafted for collectors.</p>
         </div>
     </footer>
+
+    <!-- Scripts -->
+    <script src="{% static 'js/modern_contact.js' %}"></script>
 </body>
+
 </html>

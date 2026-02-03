@@ -1,80 +1,145 @@
-<!-- artwork_detail.html -->
-
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>{{ artwork.title }}</title>
-    <link href="{% static 'css/artwork_detail.css' %}" rel="stylesheet">
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/js/bootstrap.bundle.min.js" 
-    integrity="sha384-YUe2LzesAfftltw+PEaao2tjU/QATaW/rOitAq67e0CT0Zi2VVRL0oC4+gAaeBKu" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="{% static 'js/artwork_detail.js' %}"></script>
-    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ artwork.title }} | ArtBhavan</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Syne:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/modern_artwork_detail.css' %}">
+
+    <!-- GSAP & Plugins -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/split-type"></script>
 </head>
+
 <body>
 
-    <div class="container artwork-container">
-        <!-- Left Side: Thumbnails + Main Image -->
-        <div class="d-flex">
-            <div class="thumbnail-list me-3">
-                <img src="{{ artwork.image.url }}" class="active" onclick="changeImage(this)">
-                {% if artwork.thumbnail_2 %}
-                    <img src="{{ artwork.thumbnail_2.url }}" onclick="changeImage(this)">
-                {% endif %}
-                {% if artwork.thumbnail_3 %}
-                    <img src="{{ artwork.thumbnail_3.url }}" onclick="changeImage(this)">
-                {% endif %}
-                {% if artwork.thumbnail_4 %}
-                    <img src="{{ artwork.thumbnail_4.url }}" onclick="changeImage(this)">
-                {% endif %}
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+    <div class="custom-cursor-follower"></div>
+
+    <!-- Fixed Glass Navbar -->
+    <nav class="glass-nav">
+        <div class="nav-container">
+            <a href="{% url 'userdashboard' %}" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                <span>Back to Gallery</span>
+            </a>
+            <a href="/" class="brand-logo">Art<span>Bhavan</span></a>
+            <div class="nav-links d-none d-md-flex gap-4">
+                <a href="{% url 'cart' %}" class="text-decoration-none text-white opacity-75">
+                    <i class="fas fa-shopping-bag"></i>
+                </a>
             </div>
-            <div class="main-image">
-                <img id="mainArtworkImage" src="{{ artwork.image.url }}" alt="{{ artwork.title }}">
+        </div>
+    </nav>
+
+    <!-- Main Detail Section -->
+    <section class="artwork-detail-section">
+        <div class="detail-container">
+            <!-- Visual Side -->
+            <div class="visual-side">
+                <div class="main-image-wrapper">
+                    <img id="mainArtworkImage" src="{{ artwork.image.url }}" alt="{{ artwork.title }}">
+                </div>
+
+                <div class="thumbnails-strip">
+                    <div class="thumb-item active" onclick="changeImage('{{ artwork.image.url }}', this)">
+                        <img src="{{ artwork.image.url }}" alt="Thumbnail Main">
+                    </div>
+                    {% if artwork.thumbnail_2 %}
+                    <div class="thumb-item" onclick="changeImage('{{ artwork.thumbnail_2.url }}', this)">
+                        <img src="{{ artwork.thumbnail_2.url }}" alt="Thumbnail 2">
+                    </div>
+                    {% endif %}
+                    {% if artwork.thumbnail_3 %}
+                    <div class="thumb-item" onclick="changeImage('{{ artwork.thumbnail_3.url }}', this)">
+                        <img src="{{ artwork.thumbnail_3.url }}" alt="Thumbnail 3">
+                    </div>
+                    {% endif %}
+                    {% if artwork.thumbnail_4 %}
+                    <div class="thumb-item" onclick="changeImage('{{ artwork.thumbnail_4.url }}', this)">
+                        <img src="{{ artwork.thumbnail_4.url }}" alt="Thumbnail 4">
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Info Side -->
+            <div class="info-side">
+                <span class="category-tag">{{ artwork.category }}</span>
+                <h1 class="artwork-title">{{ artwork.title }}</h1>
+
+                <div class="price-box">
+                    <p class="price-label">Investment Price</p>
+                    <div class="price-amount">₹ {{ artwork.price|floatformat:0 }}</div>
+                </div>
+
+                <div class="artwork-description">
+                    {{ artwork.description }}
+                </div>
+
+                <div class="spec-grid">
+                    <div class="spec-item">
+                        <span class="spec-label">Medium</span>
+                        <span class="spec-value">{{ artwork.category }}</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Dimensions</span>
+                        <span class="spec-value">{{ artwork.width }} x {{ artwork.height }} CM</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Style</span>
+                        <span class="spec-value">Hyper-Realistic</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Shipping</span>
+                        <span class="spec-value">Worldwide (Rolled)</span>
+                    </div>
+                </div>
+
+                <form method="post" action="{% url 'add_to_cart' artwork.id %}" class="purchase-controls">
+                    {% csrf_token %}
+
+                    <div class="d-flex align-items-center gap-4">
+                        <div class="qty-selector">
+                            <button type="button" class="qty-btn" onclick="updateQty(-1)">-</button>
+                            <input type="number" name="quantity" id="quantity" value="1" min="1" class="qty-input"
+                                readonly>
+                            <button type="button" class="qty-btn" onclick="updateQty(1)">+</button>
+                        </div>
+                        <p class="text-white-50 m-0 small">Secure Packaging included</p>
+                    </div>
+
+                    <div class="d-flex gap-3 mt-2">
+                        <button type="submit" class="btn-add-cart">
+                            <i class="fas fa-shopping-cart"></i>
+                            ADD TO CART
+                        </button>
+                        <button type="button" class="btn-wishlist">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
-    
-        <!-- Right Side: Info -->
-<div class="artwork-info">
-    <div class="artwork-title">{{ artwork.title }}</div>
-    <div class="artwork-price">Rs. {{ artwork.price }}</div>
-    <div class="fw-bold mb-3 text-muted">Rolled Canvas</div>
+    </section>
 
-    <form method="post" action="{% url 'add_to_cart' artwork.id %}">
-        {% csrf_token %}
-        
-        <div class="mb-4">
-            <label for="size" class="form-label fw-bold">Size</label>
-            <select class="form-select" name="size" id="size">
-                <option value="9x12 Inches">9x12 Inches</option>
-                <option value="12x18 Inches">12x18 Inches</option>
-                <option value="18x24 Inches">18x24 Inches</option>
-            </select>
-        </div>
-
-        <div class="mb-4 d-flex align-items-center" style="padding-top: 10px;">
-            <label for="quantity" class="form-label fw-bold me-3">Quantity</label>
-            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="updateQty(-1)">-</button>
-            <input type="number" name="quantity" id="quantity" value="1" min="1" class="form-control mx-2" style="width: 50px;">
-            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="updateQty(1)">+</button>
-        </div>
-
-        <button type="submit" class="btn add-to-cart-btn w-100 py-2">ADD TO CART</button>
-    </form>
-
-    <div class="desc-text mt-4">
-        {{ artwork.description }}
-    </div>
-</div>
-
-
-<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-
-
-
-
+    <!-- Scripts -->
+    <script src="{% static 'js/modern_artwork_detail.js' %}"></script>
 </body>
+
 </html>

@@ -10,9 +10,9 @@ from django.contrib.auth.models import User
 # User signup------------------------------------>
 class UserSignup(models.Model):
   
-    phoneorusername = models.CharField(max_length=15)
+    phoneorusername = models.CharField(max_length=100)
     email = models.EmailField(max_length=254, blank=True, null=True)
-    password = models.CharField(max_length=15)
+    password = models.CharField(max_length=128)
     
     
     
@@ -26,7 +26,7 @@ class UserSignup(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(UserSignup, on_delete=models.CASCADE)
     email = models.EmailField( max_length=254, blank=True, null=True)
-    phoneorusername = models.CharField(max_length=15)
+    phoneorusername = models.CharField(max_length=100)
     profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
     phone = models.CharField(max_length=15, blank=True, null=True)
     country = CountryField(blank_label='(Select country)', blank=True, null=True)

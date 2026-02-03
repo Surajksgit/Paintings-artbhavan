@@ -1,142 +1,254 @@
-<!-- arthome.html -->
-
 {% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>ArtBhavan | Premium Art Collection</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Syne:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/js/bootstrap.bundle.min.js" 
-    integrity="sha384-YUe2LzesAfftltw+PEaao2tjU/QATaW/rOitAq67e0CT0Zi2VVRL0oC4+gAaeBKu" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="{% static 'css/modern_arthome.css' %}">
+
+    <!-- GSAP & Plugins -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/split-type"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="{% static 'js/script.js' %}"></script>
-
-
-
-    <title>ArtBhavan</title>
-    
-    
 </head>
-<body>  
-    <!-- Top Loading Bar -->
-<div id="loading-bar"></div>
 
+<body class="bg-dark-custom">
 
+    <!-- Floating Identity Bar -->
+    {% if not user.is_authenticated %}
+    <div class="floating-identity-bar">
+        <a href="{% url 'login' %}" class="auth-link-minimal">Login</a>
+        <a href="{% url 'signup' %}" class="auth-btn-pill">
+            <span>Join the Community</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+    {% endif %}
 
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+    <div class="custom-cursor-follower"></div>
 
-     <!-- Fixed Navbar -->
-    <nav class="nav">
-        <div><strong style="margin-left: 70px; font-size: 1.5rem;" title="ArtBhavan">ArtBhavan</strong></div>
-        <div>
-            <a href="{% url 'about' %}">About</a>
-            <!-- <a href="#gallery">Gallery</a> -->
-            <a href="{% url 'contact' %}" >Contact</a>
-            
+    <!-- Loading Screen -->
+    <div id="loader" class="loader-container">
+        <div class="loader-content">
+            <span class="loader-text">ARTBHAVAN</span>
+            <div class="loader-bar"></div>
         </div>
-    </nav>
-       
-
-
-
-    <!-- Sub-Navbar -->
-    <div class="sub-nav">
-        <div class="nav-links">
-            <a href="{% url 'collection' %}">Collection</a>
-            <a href="#new">New</a>
-
-            <!-- Categories Dropdown -->
-            <div class="dropdown">
-                <a href="#" class="dropbtn">Categories <i class="fa fa-chevron-down"></i></a>
-                <div class="dropdown-content">
-                    <a href="{% url 'collection' %}?category=Sketches">Sketches</a>
-                    <a href="{% url 'collection' %}?category=Portraits">Portraits</a>
-                    <a href="{% url 'collection' %}?category=Oil Paintings">Oil Paintings</a>
-                    <!-- <a href="#watercolors">Watercolors</a> -->
-                    <a href="{% url 'collection' %}?category=Digital Art">Digital Art</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Search Bar -->
-        <!-- <div class="search-container">
-            <input type="text" class="search-bar" placeholder="Search for artworks...">
-            <i class="fa fa-search search-icon"></i>
-        </div> -->
-        <div class="logd">
-            <a  class="login-btn" style=" color: #222; text-decoration: none;" >Login</a>
-            <div class="logd-content">
-              <a href="{% url 'login' %}">Login</a>
-              <a href="{% url 'signup' %}">Sign Up</a>
-            </div>
-          </div>
     </div>
 
-    <!-- Main Content -->
-    <section>
-        <div class="container">
-            <div class="text-content">
-                <h1 style="margin-left: 50px;">Welcome to ArtBhavan</h1>
-                <p style="margin-left: 50px;">Explore a collection of handpicked artwork .Your destination for exquisite artworks and handmade collections. Discover creativity at its finest.<br> Own a masterpiece today!</p>
-                <a href="{% url 'collection' %}">
-                <button class="btn" style="margin-left: 50px;" title="Explore The Artworks">Explore Art</button>
-                </a>
+    <!-- Fixed Glass Navbar -->
+    <nav class="glass-nav">
+        <div class="nav-container">
+            <a href="/" class="brand-logo">Art<span>Bhavan</span></a>
+
+            <div class="nav-menu">
+                <a href="{% url 'collection' %}" class="nav-link-custom">Collection</a>
+                <div class="custom-dropdown">
+                    <button class="dropdown-trigger">Categories <i class="fa fa-chevron-down"></i></button>
+                    <div class="dropdown-menu-custom">
+                        <a href="{% url 'collection' %}?category=Sketches">Sketches</a>
+                        <a href="{% url 'collection' %}?category=Portraits">Portraits</a>
+                        <a href="{% url 'collection' %}?category=Oil Paintings">Oil Paintings</a>
+                        <a href="{% url 'collection' %}?category=Digital Art">Digital Art</a>
+                    </div>
+                </div>
+                <a href="{% url 'about' %}" class="nav-link-custom">About</a>
+                <a href="{% url 'contact' %}" class="nav-link-custom">Contact us</a>
             </div>
 
-            <!-- Carousel -->
-            <div class="illustration">
-                <div id="artCarousel" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="{% static 'image/536720.jpeg' %}" class="d-block w-100" alt="Art 1" title="Yardly">
-                            <div class="carousel-caption d-none d-md-block">
-                                <h5>Yardly</h5>
+            <!-- Auth buttons removed from here and moved to floating-header -->
+            <div class="nav-actions">
+                {% if user.is_authenticated %}
+                <div class="user-profile-dropdown">
+                    <button class="profile-trigger"><i class="fa fa-user"></i></button>
+                </div>
+                {% endif %}
+            </div>
+
+            <button class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <main>
+        <section class="hero-section">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <div class="hero-badge" data-gsap="fade-up">Handpicked Masterpieces</div>
+                    <h1 class="hero-title split-text" data-gsap="reveal">Where Every <br> Stroke Tells A
+                        <span>Story.</span>
+                    </h1>
+                    <p class="hero-description" data-gsap="fade-up" data-gsap-delay="0.2">
+                        Discover a world of exquisite artworks and handmade collections. ArtBhavan brings the finest
+                        creativity to your space, one masterpiece at a time.
+                    </p>
+                    <div class="hero-cta" data-gsap="fade-up" data-gsap-delay="0.4">
+                        <a href="{% url 'collection' %}" class="btn-premium lg">
+                            Explore Gallery
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </a>
+                        <a href="#featured" class="btn-outline lg">View Featured</a>
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <div class="visual-wrapper">
+                        <div class="main-art-card parallax-element" data-speed="0.05">
+                            <img src="{% static 'image/536720.jpeg' %}" alt="Featured Art" class="parallax-img">
+                            <div class="art-caption">
+                                <h3>Yardly</h3>
+                                <span>Oil on Canvas</span>
+                            </div>
                         </div>
+                        <div class="floating-element element-1 parallax-element" data-speed="0.1">
+                            <img src="{% static 'image/manwithbook.jpeg' %}" alt="Art 2">
                         </div>
-                        <div class="carousel-item">
-                            <img src="{% static 'image/manwithbook.jpeg' %}" class="d-block w-100" alt="Art 2" title="Man with a Book">
-                            <div class="carousel-caption d-none d-md-block">
-                                <h5>Man with a Book</h5>
+                        <div class="floating-element element-2 parallax-element" data-speed="0.15">
+                            <img src="{% static 'image/sky.jpeg' %}" alt="Art 3">
                         </div>
-                        </div>
-                        <div class="carousel-item">
-                            <img src="{% static 'image/street.jpeg' %}" class="d-block w-100" alt="Art 3"   title="Empty Street">
-                            <div class="carousel-caption d-none d-md-block">
-                                <h5>Empty Street</h5>
-                        </div>
-                        </div>
-                        <div class="carousel-item">
-                            <img src="{% static 'image/boat.jpeg' %}" class="d-block w-100" alt="Art 4" title="Boat">
-                            <div class="carousel-caption d-none d-md-block">
-                                <h5>Boat </h5>
-                        </div>
-                        </div>
-                        <div class="carousel-item">
-                            <img src="{% static 'image/download13.jpeg' %}" class="d-block w-100" alt="Art 5" title="Dune">
-                            <div class="carousel-caption d-none d-md-block">
-                                <h5>Dune</h5>
-                        </div>
-                        </div>
-                        <div class="carousel-item">
-                            <img src="{% static 'image/sky.jpeg' %}" class="d-block w-100" alt="Art 6" title="Sky">
-                            <div class="carousel-caption d-none d-md-block">
-                                <h5>Sky</h5>
-                        </div>
+                        <div class="decoration-circle"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Immersive Featured Section -->
+        <section id="featured" class="featured-section-new">
+            <div class="featured-bg-glow"></div>
+
+            <div class="section-container">
+                <div class="featured-header-group">
+                    <div class="header-left">
+                        <span class="eyebrow" data-gsap="fade-right">Curated Collection</span>
+                        <h2 class="display-title split-text-new">Signature <br><span>Masterpieces</span></h2>
+                    </div>
+                    <div class="header-right">
+                        <p class="section-desc">Hand-selected works that define the essence of modern artistry. Each
+                            piece in this collection represents a unique journey through color and emotion.</p>
+                        <div class="swiper-nav-group">
+                            <div class="swiper-button-prev-custom"><i class="fa fa-arrow-left"></i></div>
+                            <div class="swiper-button-next-custom"><i class="fa fa-arrow-right"></i></div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-       
-          
-    </section>
 
+            <div class="swiper main-featured-swiper">
+                <div class="swiper-wrapper">
+                    <!-- Slide 1 -->
+                    <div class="swiper-slide">
+                        <div class="immersive-card">
+                            <div class="card-number">01</div>
+                            <div class="card-image-box">
+                                <img src="{% static 'image/street.jpeg' %}" alt="Empty Street">
+                                <div class="card-overlay"></div>
+                            </div>
+                            <div class="card-info-box">
+                                <span class="card-cat">Urban Series</span>
+                                <h3 class="card-title">Silent Echoes</h3>
+                                <div class="card-meta">
+                                    <span class="price">From $850</span>
+                                    <a href="{% url 'collection' %}" class="explore-link">Details <i
+                                            class="fa fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-    
-    
+                    <!-- Slide 2 -->
+                    <div class="swiper-slide">
+                        <div class="immersive-card">
+                            <div class="card-number">02</div>
+                            <div class="card-image-box">
+                                <img src="{% static 'image/boat.jpeg' %}" alt="Boat">
+                                <div class="card-overlay"></div>
+                            </div>
+                            <div class="card-info-box">
+                                <span class="card-cat">Classical Oil</span>
+                                <h3 class="card-title">Midnight Harbor</h3>
+                                <div class="card-meta">
+                                    <span class="price">From $1,200</span>
+                                    <a href="{% url 'collection' %}" class="explore-link">Details <i
+                                            class="fa fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 3 -->
+                    <div class="swiper-slide">
+                        <div class="immersive-card">
+                            <div class="card-number">03</div>
+                            <div class="card-image-box">
+                                <img src="{% static 'image/download13.jpeg' %}" alt="Dune">
+                                <div class="card-overlay"></div>
+                            </div>
+                            <div class="card-info-box">
+                                <span class="card-cat">Abstract Landscape</span>
+                                <h3 class="card-title">Golden Solitude</h3>
+                                <div class="card-meta">
+                                    <span class="price">From $950</span>
+                                    <a href="{% url 'collection' %}" class="explore-link">Details <i
+                                            class="fa fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 4 -->
+                    <div class="swiper-slide">
+                        <div class="immersive-card">
+                            <div class="card-number">04</div>
+                            <div class="card-image-box">
+                                <img src="{% static 'image/manwithbook.jpeg' %}" alt="Man with Book">
+                                <div class="card-overlay"></div>
+                            </div>
+                            <div class="card-info-box">
+                                <span class="card-cat">Portrait Study</span>
+                                <h3 class="card-title">The Chronicler</h3>
+                                <div class="card-meta">
+                                    <span class="price">From $1,500</span>
+                                    <a href="{% url 'collection' %}" class="explore-link">Details <i
+                                            class="fa fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="swiper-progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Scripts -->
+    <script src="{% static 'js/modern_arthome.js' %}"></script>
 </body>
+
 </html>

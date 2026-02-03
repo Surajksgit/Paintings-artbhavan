@@ -1,108 +1,152 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us | ArtBhavan</title>
-    <link rel="stylesheet" href="{% static 'css/about.css' %}">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Syne:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"> -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/modern_about.css' %}">
 
+    <!-- GSAP & Plugins -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/split-type"></script>
 </head>
-<body>
 
-    <!-- Main Navbar -->
-    <nav class="main-navbar">
-        <div><a href="/" style="color: #fff; font-size: 1.5rem;">ArtBhavan</a></div>
-        <div>
-            <a href="/">Home</a>
-            <a href="{% url 'contact' %}" class="ms-4">Contact</a>
+<body class="bg-dark">
+
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+    <div class="custom-cursor-follower"></div>
+
+    <!-- Fixed Glass Navbar -->
+    <nav class="glass-nav">
+        <div class="nav-container">
+            <a href="/" class="brand-logo">Art<span>Bhavan</span></a>
+            <div class="nav-links d-none d-md-flex gap-4">
+                <a href="/" class="text-decoration-none text-white opacity-75 hover-opacity-100">Home</a>
+                <a href="{% url 'collection' %}"
+                    class="text-decoration-none text-white opacity-75 hover-opacity-100">Collection</a>
+                <a href="{% url 'contact' %}"
+                    class="text-decoration-none text-white opacity-75 hover-opacity-100">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <a href="{% url 'signup' %}" class="btn btn-sm btn-outline-warning rounded-pill px-4">Join Community</a>
+            </div>
         </div>
     </nav>
 
-    <div class="about-header">
-        <h1>Welcome to <span class="highlight">ArtBhavan</span></h1>
-        <p>Your creative destination for timeless art and expression.</p>
-    </div>
-
-    <div class="container about-section">
-        <div class="row align-items-center">
-            <div class="col-md-6">
-                <img src="{% static 'image/rose.jpeg' %}" class="img-fluid" alt="Art Showcase">
-            </div>
-            <div class="col-md-6 about-text">
-                <h2>Our Story</h2>
-                <p>ArtBhavan was born from a passion to connect art lovers and creators. We believe art transcends boundaries and speaks to the soul. Whether you're a budding artist or an admirer, our platform gives everyone a chance to experience, share, and own beautiful artwork.</p>
-                <p>With a curated collection of sketches, oil paintings, portraits,</span> and digital art</span>, we ensure quality, authenticity, and uniqueness in every piece.</p>
-            </div>
+    <!-- About Hero Section -->
+    <header class="about-hero">
+        <div class="hero-bg-text">OUR STORY</div>
+        <div class="hero-content">
+            <h1 class="about-title">Beyond The <span>Canvas</span></h1>
+            <p class="about-subtitle">ArtBhavan is more than a gallery—it's a sanctuary where creativity meets passion
+                and every stroke tells a unique story.</p>
         </div>
-    </div>
+    </header>
 
-    <div class="container about-section">
-        <div class="row text-center">
-            <div class="col-md-4 mb-4">
-                <div class="mission-card">
-                    <i class="fas fa-palette fa-2x mb-3 text-warning"></i>
-                    <h5>Promoting Creativity</h5>
-                    <p>We provide a platform for artists to showcase their work to the world.</p>
+    <!-- Our Story Section -->
+    <section class="story-section">
+        <div class="story-container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="story-image-wrapper">
+                        <img src="{% static 'image/rose.jpeg' %}" alt="Artistic Rose Showcase">
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="mission-card">
-                    <i class="fas fa-heart fa-2x mb-3 text-danger"></i>
-                    <h5>Connecting Hearts</h5>
-                    <p>We connect emotions with visuals through meaningful art pieces.</p>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="mission-card">
-                    <i class="fas fa-globe fa-2x mb-3 text-info"></i>
-                    <h5>Worldwide Reach</h5>
-                    <p>We aim to make local talent go global with ease and exposure.</p>
+                <div class="col-lg-6">
+                    <div class="story-content">
+                        <span class="section-label">Since Day One</span>
+                        <h2 class="section-title">A Vision Of <br>Authenticity</h2>
+                        <p>ArtBhavan was born from a singular passion: to bridge the gap between soulful creators and
+                            art enthusiasts. We believe that art isn't just decoration, but a catalyst for emotion and
+                            transformation.</p>
+                        <p>Whether you're a seasoned collector or a first-time admirer, our platform is designed to make
+                            the discovery and acquisition of fine art a seamless, inspiring experience.</p>
+                        <p>From meticulous sketches and vibrant oil traditionalism to the cutting edge of digital
+                            expression, we curate every piece to ensure it carries the spirit of its maker.</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-        <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-about">
-                <h2>ArtBhavan</h2>
-                <p>Your destination for exquisite artworks and handmade collections. Discover creativity at its finest.</p>
+    </section>
+
+    <!-- Mission & Values -->
+    <section class="mission-section">
+        <div class="mission-grid">
+            <div class="mission-card">
+                <div class="mission-icon"><i class="fas fa-palette"></i></div>
+                <h4>Empowering Artists</h4>
+                <p>We provide artists with the digital stage they deserve, turning local talent into global inspiration.
+                </p>
             </div>
-    
-            <div class="footer-links">
-                <h3>Quick Links</h3>
-                <ul>
+            <div class="mission-card">
+                <div class="mission-icon"><i class="fas fa-heart"></i></div>
+                <h4>Curating Emotion</h4>
+                <p>Behind every masterpiece is a heartbeat. We select works that evoke profound emotional resonance.</p>
+            </div>
+            <div class="mission-card">
+                <div class="mission-icon"><i class="fas fa-globe"></i></div>
+                <h4>Global Bridge</h4>
+                <p>Breaking down boundaries, we bring the finest international artistry straight to your living space.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modern Footer -->
+    <footer class="footer-modern">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <div class="footer-logo">Art<span>Bhavan</span></div>
+                <p class="text-secondary">Exquisite artworks and handpicked collections. Discover the pinnacle of
+                    creativity for your sanctuary.</p>
+            </div>
+            <div class="footer-column">
+                <h5>Navigation</h5>
+                <ul class="footer-links">
                     <li><a href="/">Home</a></li>
                     <li><a href="{% url 'collection' %}">Collections</a></li>
-                    <li><a href="{% url 'cart' %}">Cart</a></li>
                     <li><a href="{% url 'contact' %}">Contact Us</a></li>
                 </ul>
             </div>
-    
-            <div class="footer-contact">
-                <h3>Contact</h3>
-                <p><i class="fas fa-phone-alt"></i> +91 123 456 7890</p>
-                <p><i class="fas fa-envelope"></i> artbhavan@gmail.com</p>
-                <p><i class="fas fa-map-marker-alt"></i> Kochi, Kerala, India</p>
+            <div class="footer-column">
+                <h5>Contact Info</h5>
+                <ul class="footer-links">
+                    <li><i class="fas fa-phone-alt me-2 text-warning"></i> +91 123 456 7890</li>
+                    <li><i class="fas fa-envelope me-2 text-warning"></i> artbhavan@gmail.com</li>
+                    <li><i class="fas fa-map-marker-alt me-2 text-warning"></i> Kochi, Kerala, India</li>
+                </ul>
             </div>
-    
-            <div class="footer-social">
-                <h3>Follow Us</h3>
-                <a href="#fb"><i class="fab fa-facebook-f"></i></a>
-                <a href="#insta"><i class="fab fa-instagram"></i></a>
-                <a href="#X"><i class="fab fa-x-twitter"></i></a>
-                <a href="#pinterest"><i class="fab fa-pinterest-p"></i></a>
+            <div class="footer-column">
+                <h5>Follow Us</h5>
+                <div class="social-links">
+                    <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-btn"><i class="fab fa-x-twitter"></i></a>
+                </div>
             </div>
         </div>
-    
-        <div class="footer-bottom">
-            <p>&copy; 2025 <strong>ArtBhavan</strong>. All rights reserved.</p>
+        <div class="text-center mt-5 pt-4 border-top border-secondary opacity-50">
+            <p>&copy; 2026 ArtBhavan. All rights reserved.</p>
         </div>
     </footer>
 
+    <!-- Scripts -->
+    <script src="{% static 'js/modern_about.js' %}"></script>
 </body>
+
 </html>

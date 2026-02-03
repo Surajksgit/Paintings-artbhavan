@@ -2,217 +2,229 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>User Dashboard | ArtBhavan</title>
+    <title>Dashboard | ArtBhavan</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/userdashboard.css' %}">
+
+    <!-- CSS Dependencies -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/js/bootstrap.bundle.min.js" 
-    integrity="sha384-YUe2LzesAfftltw+PEaao2tjU/QATaW/rOitAq67e0CT0Zi2VVRL0oC4+gAaeBKu" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="{% static 'js/userdashboardscript.js' %}"></script>
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/userdashboard.css' %}">
+
+    <style>
+        /* Fallback to ensure content is visible if JS fails */
+        .hero-title,
+        .hero-subtitle,
+        .stat-item,
+        .artwork-card,
+        .main-nav {
+            opacity: 1;
+        }
+    </style>
 </head>
-<body>
 
-    <!-- Main Navbar -->
-    <nav class="main-navbar">
-        <div><a href="/" style="color: #fff; font-size: 1.5rem;">ArtBhavan</a></div>
-        <div>
-            <a href="/">Home</a>
-            <a href="{% url 'about' %}" class="ms-4">About</a>
-            <a href="{% url 'contact' %}" class="ms-4">Contact</a>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="/" class="brand">Art<span>Bhavan</span></a>
+
+            <div class="nav-links">
+                <a href="{% url 'arthome' %}">Home</a>
+                <a href="{% url 'collection' %}">Collection</a>
+                <a href="{% url 'my_orders' %}">Orders</a>
+                <a href="{% url 'about' %}">About</a>
+                <a href="{% url 'contact' %}">Contact us</a>
+            </div>
+
+            <div class="nav-actions">
+                <div class="dropdown">
+                    <button class="dropbtn">Explore <i class="fa fa-chevron-down"></i></button>
+                    <div class="dropdown-content">
+                        <a href="{% url 'collection' %}?category=Sketches">Sketches</a>
+                        <a href="{% url 'collection' %}?category=Portraits">Portraits</a>
+                        <a href="{% url 'collection' %}?category=Oil Paintings">Oil Paintings</a>
+                        <a href="{% url 'collection' %}?category=Digital Art">Digital Art</a>
+                    </div>
+                </div>
+                <a href="{% url 'cart' %}" class="nav-icon" title="Cart">
+                    <i class="fas fa-shopping-cart"></i>
+                </a>
+                <a href="{% url 'myprofile' %}" class="nav-icon" title="Profile">
+                    <i class="fas fa-user-circle"></i>
+                </a>
+                <a href="#" class="nav-icon logout-trigger" data-bs-toggle="modal" data-bs-target="#logoutModal"
+                    title="Logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
+            </div>
         </div>
     </nav>
 
-    <!-- Sub Navbar -->
-    <div class="sub-navbar">
-        <div class="left-links">
-            
-            <a href="{% url 'collection' %}">Collection</a>
-            <a href="#new">New</a>
-            <a href="{% url 'my_orders' %}">Orders</a>
-            <a href="#">Wishlist</a>
-            <!-- Categories Dropdown -->
-            <div class="dropdown">
-                <a href="#" class="dropbtn">Categories <i class="fa fa-chevron-down"></i></a>
-                <div class="dropdown-content">
-                    <a  href="{% url 'collection' %}?category=Sketches">Sketches</a>
-                    <a  href="{% url 'collection' %}?category=Portraits">Portraits</a>
-                    <a  href="{% url 'collection' %}?category=Oil Paintings">Oil Paintings</a>
-                    <a  href="{% url 'collection' %}?category=Digital Art">Digital Art</a>
-                </div>
-                
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-parallax-bg">
+            <div class="parallax-layer active">
+                <img src="{% static 'image/gibili2.jpg' %}" alt="Background 1">
+            </div>
+            <div class="parallax-layer">
+                <img src="{% static 'image/gibili4.jpg' %}" alt="Background 2">
+            </div>
+            <div class="parallax-layer">
+                <img src="{% static 'image/gibili6.jpg' %}" alt="Background 3">
             </div>
         </div>
-        <div class="right-icons">
-            <a href="#notification" style="padding-right: 20px; cursor: pointer; text-decoration: none;" title="Notifications">
-                <i class="fas fa-bell"></i>
-            </a>
-        
-            <a href="{% url 'cart' %}" style="padding-right: 20px; cursor: pointer;text-decoration: none;" title="Cart">
-                <i class="fas fa-shopping-cart"></i>
-            </a>
-        
-            <a href="{% url 'myprofile' %}" style="cursor: pointer;text-decoration: none;"title="Profile">
-                <i class="fas fa-user"></i>
-            </a>
-            <!-- Logout Trigger (opens the modal) -->
-            <a href="{% url 'logout' %}" data-bs-toggle="modal" data-bs-target="#logoutModal" style="padding-right: 20px; padding-left: 20px; cursor: pointer; text-decoration: none;"title="Logout">
-                <i class="fas fa-sign-out-alt"></i>
-            </a>
+
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+            <h1 class="hero-title">Welcome back, <br><span>{{ user_name }}</span></h1>
+            <p class="hero-subtitle">Elevate your living spaces with our curated masterpieces.</p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">24</span>
+                    <span class="stat-label">Orders</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">12</span>
+                    <span class="stat-label">Favorites</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+        <!-- Filter Bar -->
+        <section class="filter-section">
+            <div class="container">
+                <form method="get" class="filter-form">
+                    <div class="filter-group">
+                        <label for="category">Category</label>
+                        <select name="category" id="category" class="filter-select">
+                            <option value="">All Categories</option>
+                            <option value="Sketches" {% if selected_category=="Sketches" %}selected{% endif %}>Sketches
+                            </option>
+                            <option value="Portraits" {% if selected_category=="Portraits" %}selected{% endif %}>
+                                Portraits</option>
+                            <option value="Oil Paintings" {% if selected_category=="Oil Paintings" %}selected{% endif
+                                %}>Oil Paintings</option>
+                            <option value="Digital Art" {% if selected_category=="Digital Art" %}selected{% endif %}>
+                                Digital Art</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="sort_by">Sort By</label>
+                        <select name="sort_by" id="sort_by" class="filter-select">
+                            <option value="">Default Sorting</option>
+                            <option value="low_to_high" {% if selected_sort=="low_to_high" %}selected{% endif %}>Price:
+                                Low to High</option>
+                            <option value="high_to_low" {% if selected_sort=="high_to_low" %}selected{% endif %}>Price:
+                                High to Low</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="apply-btn">Filter Artworks</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Gallery -->
+        <section class="gallery-section">
+            <div class="container">
+                <h2 class="section-title">Exclusive Collection</h2>
+                <div class="artworks-grid">
+                    {% for art in artworks %}
+                    <div class="artwork-card">
+                        <div class="artwork-image-container">
+                            <img src="{{ art.image.url }}" class="artwork-image" alt="{{ art.title }}">
+                            <div class="artwork-hover-overlay">
+                                <a href="{% url 'artwork_detail' art.id %}" class="view-details">View Masterpiece</a>
+                            </div>
+                        </div>
+                        <div class="artwork-info">
+                            <span class="artwork-category">{{ art.category }}</span>
+                            <h3 class="artwork-title">{{ art.title }}</h3>
+                            <div class="artwork-footer">
+                                <span class="artwork-price">₹{{ art.price|floatformat:0 }}</span>
+                                <div class="artwork-rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.9</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="empty-state text-center py-5">
+                        <i class="fas fa-palette fa-3x mb-3 text-muted"></i>
+                        <p>No masterpieces found matching your filters.</p>
+                        <a href="{% url 'userdashboard' %}" class="btn btn-outline-primary mt-3">Reset Filters</a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Logout Modal -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content custom-modal">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title">Sign Out</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center py-4">
+                    <div class="logout-icon-large mb-3"><i class="fas fa-door-open"></i></div>
+                    <p>Are you sure you want to exit your creative space?</p>
+                </div>
+                <div class="modal-footer border-0 justify-content-center">
+                    <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Stay</button>
+                    <a href="{% url 'logout' %}" class="btn btn-danger">Logout Now</a>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Logout Confirmation Modal -->
-<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header bg-danger text-white">
-          <h5 class="modal-title" id="logoutModalLabel"><i class="fas fa-sign-out-alt me-2"></i>Confirm Logout</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body text-center" style="background-color: #4e4c4c;">
-          <p>Are you sure you want to logout?</p>
-        </div>
-        <div class="modal-footer justify-content-center"style="background-color: #4e4c4c;">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- Full Page Logout Confirmation Popup -->
-<div id="backConfirmPopup" class="back-popup-overlay">
-    <div class="back-popup-content">
-        <h3><i class="fas fa-sign-out-alt me-2"></i>Make sure you're logged out</h3>
-        <div class="popup-buttons">
-            <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
-            <button class="btn btn-secondary" onclick="closeBackPopup()">Cancel</button>
-        </div>
-    </div>
-</div>
-
-
-  {% if messages %}
-    <div class="flash-message-container">
+    <!-- Flash Messages -->
+    {% if messages %}
+    <div class="flash-messages-container">
         {% for message in messages %}
-            <div class="flash-message alert alert-{{ message.tags }}">
-                {{ message }}
-            </div>
+        <div class="flash-message {{ message.tags }}">
+            <i class="fas fa-check-circle"></i>
+            <span>{{ message }}</span>
+        </div>
         {% endfor %}
     </div>
-{% endif %}
+    {% endif %}
 
-  
+    <!-- Scripts -->
+    <!-- Loading JS at end for better reliability -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    <script src="https://unpkg.com/split-type"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
 
-   
-    
-<!-- Dashboard Content -->
-<div class="dashboard-content position-relative overflow-hidden">
-    <!-- Carousel (Background) -->
-    <div id="dashboardCarousel" class="carousel slide carousel-fade position-absolute w-100 h-100" data-bs-ride="carousel" style="z-index: 0;">
-        <div class="carousel-inner h-100">
-            <div class="carousel-item active h-100">
-                <img src="{% static 'image/gibili2.jpg' %}" class="d-block w-100 h-100 object-fit-cover" alt="carousel1">
-            </div>
-            <div class="carousel-item h-100">
-                <img src="{% static 'image/gibili4.jpg' %}" class="d-block w-100 h-100 object-fit-cover" alt="carousel2">
-            </div>
-            <div class="carousel-item h-100">
-                <img src="{% static 'image/gibili6.jpg' %}" class="d-block w-100 h-100 object-fit-cover" alt="carousel3">
-            </div>
-            <div class="carousel-item h-100">
-                <img src="{% static 'image/gibili3.jpg' %}" class="d-block w-100 h-100 object-fit-cover" alt="carousel4">
-            </div>
-        </div>
-
-        <!-- Carousel Controls -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#dashboardCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#dashboardCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div>
-
-    <!-- Foreground Content -->
-    <div class="position-relative text-white" style="z-index: 2;">
-        <h2>Welcome, {{ user_name }}!</h2>
-        <p>Here you can manage your orders, profile settings.</p>
-    </div>
-</div>
-        
-
-<!-- Filter Section -->
-
-<div class="container" style="background-color: #180e0e; "> 
-    <form method="get" class="d-flex flex-wrap gap-3 align-items-center justify-content-center  p-3">
-        <div class="d-flex flex-column text-center">
-            <label for="category" class="text-white mb-2 fw-semibold"> Category</label>
-            <select name="category" id="category" class="form-select filter-select">
-                <option value="">All</option>
-                <option value="Sketches" {% if selected_category == 'Sketches' %}selected{% endif %}>Sketches</option>
-                <option value="Portraits" {% if selected_category == 'Portraits' %}selected{% endif %}>Portraits</option>
-                <option value="Oil Paintings" {% if selected_category == 'Oil Paintings' %}selected{% endif %}>Oil Paintings</option>
-                <option value="Digital Art" {% if selected_category == 'Digital Art' %}selected{% endif %}>Digital Art</option>
-            </select>
-        </div>
-
-        <div class="d-flex flex-column text-center">
-            <label for="sort_by" class="text-white mb-2 fw-semibold"> Sort by</label>
-            <select name="sort_by" id="sort_by" class="form-select filter-select">
-                <option value="">Default</option>
-                <option value="low_to_high" {% if selected_sort == 'low_to_high' %}selected{% endif %}>Price: Low to High</option>
-                <option value="high_to_low" {% if selected_sort == 'high_to_low' %}selected{% endif %}>Price: High to Low</option>
-            </select>
-        </div>
-
-        <div class="mt-4">
-            <button type="submit" class="applyfilter fw-bold shadow-sm">Apply Filters</button>
-        </div>
-    </form>
-</div>
-
-
-
-<!-- Recommended Artworks -->
-<h3 class="text-white mb-3" style="background-color: #2b2828;padding: 20px 30px 20px 30px; text-align: center;">Recommended Artworks</h3>
-<div class="container mt-4">
-    
-    <div class="artwork-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-        {% for art in artworks %}
-        <div class="col">
-            <div class="artwork-card card h-100 border-0">
-                <div class="artwork-img-wrapper position-relative">
-                    <img src="{{ art.image.url }}" class="card-img-top artwork-img" alt="{{ art.title }}">
-                    <a href="#"><button class="favorite-btn"><i class="fa-regular fa-heart"></i></button></a>
-                </div>
-                <div class="card-body text-center">
-                    <h5 class="artwork-title">{{ art.title }}</h5>
-                    <p class="artwork-price">₹ {{ art.price|floatformat:0 }}</p>
-                    <span class="artwork-category">{{ art.category }}</span>
-                    <a href="{% url 'artwork_detail' art.id %}" class="stretched-link"></a>
-                </div>
-            </div>
-        </div>
-        {% empty %}
-        <p class="text-center text-white">No artworks found.</p>
-        {% endfor %}
-    </div>
-</div>
-
-
-
-
+    <!-- Custom JS -->
+    <script src="{% static 'js/userdashboardscript.js' %}"></script>
 </body>
+
 </html>

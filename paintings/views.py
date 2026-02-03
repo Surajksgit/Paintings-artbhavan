@@ -63,7 +63,11 @@ def signup(request):
         
         # Check if user already exists
         if UserSignup.objects.filter(phoneorusername=identifier).exists():
-            messages.error(request, 'User already exists')
+            messages.error(request, 'Username already taken. Please choose another.')
+            return redirect('signup')
+        
+        if UserSignup.objects.filter(email=email).exists():
+            messages.error(request, 'This email is already registered. Please login.')
             return redirect('signup')
 
         try:
@@ -113,22 +117,24 @@ def user_login(request):
         password = request.POST.get('password')
 
         try:
-            # Find user by phone or username
-            user = UserSignup.objects.get(phoneorusername=identifier)
+            # Try to find user by phoneorusername OR email
+            if '@' in identifier:
+                user = UserSignup.objects.get(email=identifier)
+            else:
+                user = UserSignup.objects.get(phoneorusername=identifier)
 
             if check_password(password, user.password):
                 # Set session
                 request.session['user_id'] = user.id
                 request.session['user_identifier'] = user.phoneorusername
                 
-
                 messages.success(request, 'Login successful!')
-                return redirect('userdashboard')  # 🔁 redirect to dashboard or desired page
+                return redirect('userdashboard') 
             else:
                 messages.error(request, 'Invalid password. Please try again.')
 
         except UserSignup.DoesNotExist:
-            messages.error(request, 'No user found with this phone number or username.')
+            messages.error(request, 'No account found with this username or email.')
 
     return render(request, 'login.html')
 
