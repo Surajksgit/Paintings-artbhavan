@@ -117,8 +117,7 @@
 
                             <div class="order-progress">
                                 <div class="progress-track">
-                                    <div class="progress-fill"
-                                        style="width: {% if order.status == 'confirmed' %}25%{% elif order.status == 'shipped' %}50%{% elif order.status == 'out_for_delivery' %}75%{% elif order.status == 'delivered' %}100%{% else %}0%{% endif %};">
+                                    <div class="progress-fill status-{{ order.status }}">
                                     </div>
                                 </div>
                                 <div class="progress-steps">
@@ -417,6 +416,26 @@
             background: linear-gradient(90deg, var(--accent), #e67e22);
             border-radius: 10px;
             transition: width 0.8s ease;
+        }
+
+        .progress-fill.status-confirmed {
+            width: 25%;
+        }
+
+        .progress-fill.status-shipped {
+            width: 50%;
+        }
+
+        .progress-fill.status-out_for_delivery {
+            width: 75%;
+        }
+
+        .progress-fill.status-delivered {
+            width: 100%;
+        }
+
+        .progress-fill.status-pending {
+            width: 0%;
         }
 
         .progress-steps {
