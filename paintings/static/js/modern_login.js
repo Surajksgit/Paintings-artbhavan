@@ -7,16 +7,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const follower = document.querySelector('.custom-cursor-follower');
 
     document.addEventListener('mousemove', (e) => {
-        gsap.to(cursor, {
-            x: e.clientX,
-            y: e.clientY,
-            duration: 0.1
-        });
-        gsap.to(follower, {
-            x: e.clientX - 11,
-            y: e.clientY - 11,
-            duration: 0.3
-        });
+        if (window.innerWidth > 991) {
+            gsap.to(cursor, {
+                x: e.clientX,
+                y: e.clientY,
+                duration: 0.1
+            });
+            gsap.to(follower, {
+                x: e.clientX - 11,
+                y: e.clientY - 11,
+                duration: 0.3
+            });
+        }
     });
 
     // Cursor hover effects
@@ -86,15 +88,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // 4. Parallax effect for card on mouse move
     const card = document.querySelector('.login-card');
     document.addEventListener('mousemove', (e) => {
-        const x = (e.clientX - window.innerWidth / 2) / 50;
-        const y = (e.clientY - window.innerHeight / 2) / 50;
+        if (window.innerWidth > 991) {
+            const x = (e.clientX - window.innerWidth / 2) / 50;
+            const y = (e.clientY - window.innerHeight / 2) / 50;
 
-        gsap.to(card, {
-            rotationY: x,
-            rotationX: -y,
-            duration: 0.5,
-            ease: 'power2.out'
-        });
+            gsap.to(card, {
+                rotationY: x,
+                rotationX: -y,
+                duration: 0.5,
+                ease: 'power2.out'
+            });
+        }
     });
 
     // 5. Flash message removal

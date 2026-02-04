@@ -15,6 +15,7 @@ body {
     color: var(--text-primary);
     font-family: 'Outfit', sans-serif;
     overflow-x: hidden;
+    overflow-y: auto;
     cursor: none;
     min-height: 100vh;
     display: flex;
@@ -42,6 +43,18 @@ body {
     border-radius: 50%;
     pointer-events: none;
     z-index: 9999;
+}
+
+@media (max-width: 991px) {
+
+    .custom-cursor,
+    .custom-cursor-follower {
+        display: none !important;
+    }
+
+    body {
+        cursor: auto !important;
+    }
 }
 
 /* Background Elements */
@@ -103,12 +116,15 @@ body {
     position: relative;
     z-index: 1;
     box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
-    margin: 20px;
+    margin: 0 15px;
 }
 
 /* 3D perspective wrapper */
 .perspective-wrapper {
     perspective: 1000px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .signup-header {
@@ -256,10 +272,18 @@ body {
 @media (max-width: 576px) {
     .signup-card {
         padding: 40px 25px;
-        margin: 20px;
+        margin: 0 15px;
     }
 
     .signup-title {
         font-size: 2.2rem;
+    }
+
+    .glass-nav {
+        padding: 10px 20px;
+    }
+
+    .social-login-group {
+        flex-direction: column;
     }
 }

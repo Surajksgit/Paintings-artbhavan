@@ -1,202 +1,210 @@
-<!-- userdashboard.html -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard | ArtBhavan</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- CSS Dependencies -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <title>Dashboard | ArtBhavan</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Syne:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{% static 'css/userdashboard.css' %}">
+    <!-- Styles -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/modern_collection.css' %}">
 
-    <style>
-        /* Fallback to ensure content is visible if JS fails */
-        .hero-title,
-        .hero-subtitle,
-        .stat-item,
-        .artwork-card,
-        .main-nav {
-            opacity: 1;
-        }
-    </style>
+    <!-- GSAP & Plugins -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/split-type"></script>
 </head>
 
-<body>
+<body class="bg-dark">
+
     <!-- Custom Cursor -->
-    <div class="cursor-dot"></div>
-    <div class="cursor-outline"></div>
+    <div class="custom-cursor"></div>
+    <div class="custom-cursor-follower"></div>
 
-    <!-- Navigation -->
-    <nav class="main-nav">
+    <!-- Glass Navbar -->
+    <nav class="glass-nav">
         <div class="nav-container">
-            <a href="/" class="brand">Art<span>Bhavan</span></a>
-
-            <div class="nav-links">
-                <a href="{% url 'arthome' %}">Home</a>
-                <a href="{% url 'collection' %}">Collection</a>
-                <a href="{% url 'my_orders' %}">Orders</a>
-                <a href="{% url 'about' %}">About</a>
-                <a href="{% url 'contact' %}">Contact us</a>
+            <a href="/" class="brand-logo">Art<span>Bhavan</span></a>
+            <div class="nav-links d-none d-md-flex gap-4">
+                <a href="{% url 'arthome' %}" class="text-decoration-none text-white opacity-75 hover-opacity-100">Home</a>
+                <a href="{% url 'collection' %}" class="text-decoration-none text-white opacity-75 hover-opacity-100">Collection</a>
+                <a href="{% url 'my_orders' %}" class="text-decoration-none text-white opacity-75 hover-opacity-100">Orders</a>
+                <a href="{% url 'about' %}" class="text-decoration-none text-white opacity-75 hover-opacity-100">About</a>
+                <a href="{% url 'contact' %}" class="text-decoration-none text-white opacity-75 hover-opacity-100">Contact</a>
             </div>
-
-            <div class="nav-actions">
+            <div class="nav-actions d-flex gap-3 align-items-center">
+                <a href="{% url 'cart' %}" class="text-white opacity-75 hover-opacity-100"><i class="fas fa-shopping-cart"></i></a>
                 <div class="dropdown">
-                    <button class="dropbtn">Explore <i class="fa fa-chevron-down"></i></button>
-                    <div class="dropdown-content">
-                        <a href="{% url 'collection' %}?category=Sketches">Sketches</a>
-                        <a href="{% url 'collection' %}?category=Portraits">Portraits</a>
-                        <a href="{% url 'collection' %}?category=Oil Paintings">Oil Paintings</a>
-                        <a href="{% url 'collection' %}?category=Digital Art">Digital Art</a>
-                    </div>
+                    <button class="btn btn-sm btn-outline-warning rounded-pill px-3 dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="fas fa-user-circle me-1"></i> Profile
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li><a class="dropdown-item" href="{% url 'myprofile' %}">My Profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                    </ul>
                 </div>
-                <a href="{% url 'cart' %}" class="nav-icon" title="Cart">
-                    <i class="fas fa-shopping-cart"></i>
-                </a>
-                <a href="{% url 'myprofile' %}" class="nav-icon" title="Profile">
-                    <i class="fas fa-user-circle"></i>
-                </a>
-                <a href="#" class="nav-icon logout-trigger" data-bs-toggle="modal" data-bs-target="#logoutModal"
-                    title="Logout">
-                    <i class="fas fa-sign-out-alt"></i>
-                </a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="hero-parallax-bg">
-            <div class="parallax-layer active">
-                <img src="{% static 'image/gibili2.jpg' %}" alt="Background 1">
-            </div>
-            <div class="parallax-layer">
-                <img src="{% static 'image/gibili4.jpg' %}" alt="Background 2">
-            </div>
-            <div class="parallax-layer">
-                <img src="{% static 'image/gibili6.jpg' %}" alt="Background 3">
+    <!-- Dashboard Hero Section -->
+    <header class="collection-hero">
+        <div class="hero-bg-text">DASHBOARD</div>
+        <div class="hero-content">
+            <h1 class="collection-title">Welcome, <span>{{ user_name }}</span></h1>
+            <p class="collection-subtitle">Elevate your living spaces with our curated masterpieces.</p>
+
+            <!-- Stats -->
+            <div class="dashboard-stats d-flex justify-content-center gap-4 mt-5">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-number">24</span>
+                        <span class="stat-label">Orders</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="far fa-heart"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-number">12</span>
+                        <span class="stat-label">Favorites</span>
+                    </div>
+                </div>
             </div>
         </div>
+    </header>
 
-        <div class="hero-overlay"></div>
-
-        <div class="hero-content">
-            <h1 class="hero-title">Welcome back, <br><span>{{ user_name }}</span></h1>
-            <p class="hero-subtitle">Elevate your living spaces with our curated masterpieces.</p>
-            <div class="hero-stats">
-                <div class="stat-item">
-                    <span class="stat-number">24</span>
-                    <span class="stat-label">Orders</span>
+    <!-- Interactive Filter & Sort Bar -->
+    <section class="filter-bar-container">
+        <div class="filter-bar">
+            <div class="filter-group">
+                <!-- Category Filter -->
+                <div class="custom-select-wrapper">
+                    <button class="select-btn">
+                        <i class="fa fa-filter"></i>
+                        {{ request.GET.category|default:"Categories" }}
+                        <i class="fa fa-chevron-down ms-2"></i>
+                    </button>
+                    <div class="dropdown-menu-modern">
+                        <a href="?{% if request.GET.sort %}sort={{ request.GET.sort }}&{% endif %}category="
+                            class="dropdown-item-modern">All Collections</a>
+                        <a href="?{% if request.GET.sort %}sort={{ request.GET.sort }}&{% endif %}category=Sketches"
+                            class="dropdown-item-modern">Sketches</a>
+                        <a href="?{% if request.GET.sort %}sort={{ request.GET.sort }}&{% endif %}category=Portraits"
+                            class="dropdown-item-modern">Portraits</a>
+                        <a href="?{% if request.GET.sort %}sort={{ request.GET.sort }}&{% endif %}category=Oil Paintings"
+                            class="dropdown-item-modern">Oil Paintings</a>
+                        <a href="?{% if request.GET.sort %}sort={{ request.GET.sort }}&{% endif %}category=Digital Art"
+                            class="dropdown-item-modern">Digital Art</a>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-number">12</span>
-                    <span class="stat-label">Favorites</span>
+
+                <!-- Sort Order -->
+                <div class="custom-select-wrapper">
+                    <button class="select-btn">
+                        <i class="fa fa-sort"></i>
+                        {% if request.GET.sort == 'low' %}Price: Low to High
+                        {% elif request.GET.sort == 'high' %}Price: High to Low
+                        {% else %}Sort By{% endif %}
+                        <i class="fa fa-chevron-down ms-2"></i>
+                    </button>
+                    <div class="dropdown-menu-modern">
+                        <a href="?{% if request.GET.category %}category={{ request.GET.category }}&{% endif %}sort=low"
+                            class="dropdown-item-modern">Price: Low to High</a>
+                        <a href="?{% if request.GET.category %}category={{ request.GET.category }}&{% endif %}sort=high"
+                            class="dropdown-item-modern">Price: High to Low</a>
+                    </div>
                 </div>
             </div>
+
+            <!-- Modern Search -->
+            <form method="get" class="search-box-modern">
+                {% if request.GET.category %}
+                <input type="hidden" name="category" value="{{ request.GET.category }}">
+                {% endif %}
+                {% if request.GET.sort %}
+                <input type="hidden" name="sort" value="{{ request.GET.sort }}">
+                {% endif %}
+                <input type="text" name="q" class="search-input-modern" placeholder="Search artworks..."
+                    value="{{ request.GET.q }}">
+                <button type="submit" class="search-btn-modern"><i class="fa fa-search"></i></button>
+            </form>
         </div>
     </section>
 
-    <!-- Main Content -->
-    <main class="dashboard-main">
-        <!-- Filter Bar -->
-        <section class="filter-section">
-            <div class="container">
-                <form method="get" class="filter-form">
-                    <div class="filter-group">
-                        <label for="category">Category</label>
-                        <select name="category" id="category" class="filter-select">
-                            <option value="">All Categories</option>
-                            <option value="Sketches" {% if selected_category=="Sketches" %}selected{% endif %}>Sketches
-                            </option>
-                            <option value="Portraits" {% if selected_category=="Portraits" %}selected{% endif %}>
-                                Portraits</option>
-                            <option value="Oil Paintings" {% if selected_category=="Oil Paintings" %}selected{% endif
-                                %}>Oil Paintings</option>
-                            <option value="Digital Art" {% if selected_category=="Digital Art" %}selected{% endif %}>
-                                Digital Art</option>
-                        </select>
-                    </div>
-
-                    <div class="filter-group">
-                        <label for="sort_by">Sort By</label>
-                        <select name="sort_by" id="sort_by" class="filter-select">
-                            <option value="">Default Sorting</option>
-                            <option value="low_to_high" {% if selected_sort=="low_to_high" %}selected{% endif %}>Price:
-                                Low to High</option>
-                            <option value="high_to_low" {% if selected_sort=="high_to_low" %}selected{% endif %}>Price:
-                                High to Low</option>
-                        </select>
-                    </div>
-
-                    <button type="submit" class="apply-btn">Filter Artworks</button>
-                </form>
-            </div>
-        </section>
-
-        <!-- Gallery -->
-        <section class="gallery-section">
-            <div class="container">
-                <h2 class="section-title">Exclusive Collection</h2>
-                <div class="artworks-grid">
-                    {% for art in artworks %}
-                    <div class="artwork-card">
-                        <div class="artwork-image-container">
-                            <img src="{{ art.image.url }}" class="artwork-image" alt="{{ art.title }}">
-                            <div class="artwork-hover-overlay">
-                                <a href="{% url 'artwork_detail' art.id %}" class="view-details">View Masterpiece</a>
-                            </div>
-                        </div>
-                        <div class="artwork-info">
-                            <span class="artwork-category">{{ art.category }}</span>
-                            <h3 class="artwork-title">{{ art.title }}</h3>
-                            <div class="artwork-footer">
-                                <span class="artwork-price">₹{{ art.price|floatformat:0 }}</span>
-                                <div class="artwork-rating">
-                                    <i class="fas fa-star"></i>
-                                    <span>4.9</span>
-                                </div>
-                            </div>
+    <!-- Artwork Grid -->
+    <main class="collection-grid-container">
+        <h2 class="section-title-modern">Exclusive Collection</h2>
+        <div class="row g-4 mt-2">
+            {% for art in artworks %}
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="art-card-modern">
+                    <div class="img-container">
+                        <img src="{{ art.image.url }}" alt="{{ art.title }}" loading="lazy">
+                        <div class="card-overlay-modern">
+                            <a href="{% url 'artwork_detail' art.id %}" class="action-btn-modern" title="View Details">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <a href="#" class="action-btn-modern" title="Add to Wishlist">
+                                <i class="far fa-heart"></i>
+                            </a>
                         </div>
                     </div>
-                    {% empty %}
-                    <div class="empty-state text-center py-5">
-                        <i class="fas fa-palette fa-3x mb-3 text-muted"></i>
-                        <p>No masterpieces found matching your filters.</p>
-                        <a href="{% url 'userdashboard' %}" class="btn btn-outline-primary mt-3">Reset Filters</a>
+                    <div class="card-content-modern">
+                        <span class="category-tag">{{ art.category }}</span>
+                        <a href="{% url 'artwork_detail' art.id %}" class="art-name stretched-link">
+                            {{ art.title }}
+                        </a>
+                        <div class="card-footer-modern">
+                            <span class="art-price">₹{{ art.price|floatformat:0 }}</span>
+                            <span class="details-link">View Details <i class="fa fa-chevron-right"></i></span>
+                        </div>
                     </div>
-                    {% endfor %}
                 </div>
             </div>
-        </section>
+            {% empty %}
+            <div class="col-12">
+                <div class="empty-state">
+                    <i class="fa-regular fa-face-frown-open"></i>
+                    <h3>No Artworks Found</h3>
+                    <p class="text-secondary">Try adjusting your filters or search query.</p>
+                    <a href="{% url 'userdashboard' %}" class="btn btn-outline-warning mt-3 rounded-pill px-4">Clear All Filters</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
     </main>
 
     <!-- Logout Modal -->
     <div class="modal fade" id="logoutModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content custom-modal">
+            <div class="modal-content" style="background: var(--bg-card); border: 1px solid var(--glass-border);">
                 <div class="modal-header border-0">
-                    <h5 class="modal-title">Sign Out</h5>
+                    <h5 class="modal-title text-white">Sign Out</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body text-center py-4">
-                    <div class="logout-icon-large mb-3"><i class="fas fa-door-open"></i></div>
-                    <p>Are you sure you want to exit your creative space?</p>
+                    <div class="logout-icon-large mb-3"><i class="fas fa-door-open text-warning" style="font-size: 3rem;"></i></div>
+                    <p class="text-white">Are you sure you want to exit your creative space?</p>
                 </div>
                 <div class="modal-footer border-0 justify-content-center">
-                    <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Stay</button>
-                    <a href="{% url 'logout' %}" class="btn btn-danger">Logout Now</a>
+                    <button type="button" class="btn btn-outline-light rounded-pill" data-bs-dismiss="modal">Stay</button>
+                    <a href="{% url 'logout' %}" class="btn btn-danger rounded-pill">Logout Now</a>
                 </div>
             </div>
         </div>
@@ -215,16 +223,115 @@
     {% endif %}
 
     <!-- Scripts -->
-    <!-- Loading JS at end for better reliability -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
-    <script src="https://unpkg.com/split-type"></script>
-    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+    <script src="{% static 'js/modern_collection.js' %}"></script>
 
-    <!-- Custom JS -->
-    <script src="{% static 'js/userdashboardscript.js' %}"></script>
+    <style>
+        .dashboard-stats {
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 25px 35px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            min-width: 180px;
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent), #e67e22);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .stat-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-number {
+            font-family: 'Syne', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: white;
+            line-height: 1;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-title-modern {
+            font-family: 'Syne', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .flash-messages-container {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: 10000;
+        }
+
+        .flash-message {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 15px 25px;
+            color: white;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideIn 0.3s ease;
+        }
+
+        .flash-message.success {
+            border-color: #28a745;
+        }
+
+        .flash-message.error {
+            border-color: #dc3545;
+        }
+
+        .flash-message.warning {
+            border-color: #ffc107;
+        }
+
+        .flash-message.info {
+            border-color: #17a2b8;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
 </body>
 
 </html>

@@ -79,13 +79,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const tl = gsap.timeline();
 
         // Reveal Nav and Buttons Immediately
-        gsap.to(['.nav-container', '.auth-buttons', '.nav-actions', '.floating-identity-bar'], {
+        gsap.to(['.nav-container', '.nav-actions'], {
             opacity: 1,
             visibility: 'visible',
             duration: 0.5
         });
 
-        tl.from(['.nav-container', '.floating-identity-bar'], {
+        tl.from(['.nav-container'], {
             y: -30,
             opacity: 0,
             duration: 1,

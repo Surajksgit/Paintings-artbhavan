@@ -14,12 +14,14 @@ body {
     background-color: var(--bg-dark);
     color: var(--text-primary);
     font-family: 'Outfit', sans-serif;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     cursor: none;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 100px 0 50px;
 }
 
 /* Custom Cursor */
@@ -41,6 +43,18 @@ body {
     border-radius: 50%;
     pointer-events: none;
     z-index: 9999;
+}
+
+@media (max-width: 991px) {
+
+    .custom-cursor,
+    .custom-cursor-follower {
+        display: none !important;
+    }
+
+    body {
+        cursor: auto !important;
+    }
 }
 
 /* Background Elements */
@@ -102,6 +116,7 @@ body {
     position: relative;
     z-index: 1;
     box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
+    margin: 0 20px;
 }
 
 .login-header {
@@ -253,6 +268,14 @@ body {
 @media (max-width: 576px) {
     .login-card {
         padding: 40px 25px;
-        margin: 0 20px;
+        margin: 0 15px;
+    }
+
+    .login-title {
+        font-size: 2rem;
+    }
+
+    .glass-nav {
+        padding: 10px 20px;
     }
 }
