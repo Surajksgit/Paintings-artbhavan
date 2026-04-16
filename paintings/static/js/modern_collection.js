@@ -113,4 +113,19 @@ document.addEventListener('DOMContentLoaded', () => {
         onEnter: () => gsap.to('.glass-nav', { backgroundColor: 'rgba(15, 15, 15, 0.9)', duration: 0.3 }),
         onLeaveBack: () => gsap.to('.glass-nav', { backgroundColor: 'rgba(15, 15, 15, 0.6)', duration: 0.3 }),
     });
+
+    // 7. Auto-hide Flash Messages
+    const flashMessages = document.querySelectorAll('.flash-message');
+    if (flashMessages.length > 0) {
+        flashMessages.forEach(message => {
+            gsap.to(message, {
+                delay: 5,
+                duration: 0.8,
+                x: 100,
+                opacity: 0,
+                ease: "power3.inOut",
+                onComplete: () => message.remove()
+            });
+        });
+    }
 });

@@ -1,4 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // 0. Scroll Header Effect
+    const header = document.querySelector('.glass-nav');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+
     // 1. Initial GSAP Setup
     gsap.registerPlugin(ScrollTrigger);
 
@@ -208,22 +218,54 @@ document.addEventListener('DOMContentLoaded', () => {
     // Mobile Menu Toggle
     const mobileToggle = document.querySelector('.mobile-menu-toggle');
     const navMenu = document.querySelector('.nav-menu');
+    const navLinks = document.querySelectorAll('.nav-menu > a, .nav-menu .dropdown-trigger, .nav-actions-mobile > *, .mobile-cat-links a');
+
+    let isMenuOpen = false;
+
+    const menuTl = gsap.timeline({ paused: true });
+
+    menuTl.to(navMenu, {
+        right: 0,
+        duration: 0.8,
+        ease: 'expo.inOut'
+    })
+        .from(navLinks, {
+            y: -30,
+            opacity: 0,
+            stagger: 0.1,
+            duration: 0.5,
+            ease: 'power3.out'
+        }, '-=0.4');
 
     mobileToggle.addEventListener('click', () => {
+        isMenuOpen = !isMenuOpen;
         mobileToggle.classList.toggle('active');
-        // Simple toggle for now, can be enhanced with GSAP
-        if (navMenu.style.display === 'flex') {
-            navMenu.style.display = 'none';
+
+        if (isMenuOpen) {
+            navMenu.classList.add('active');
+            menuTl.play();
+            document.body.style.overflow = 'hidden';
         } else {
-            navMenu.style.display = 'flex';
-            navMenu.style.position = 'absolute';
-            navMenu.style.top = '100px';
-            navMenu.style.left = '0';
-            navMenu.style.width = '100%';
-            navMenu.style.flexDirection = 'column';
-            navMenu.style.background = 'var(--bg-card)';
-            navMenu.style.padding = '20px';
-            navMenu.style.borderRadius = '20px';
+            menuTl.reverse();
+            setTimeout(() => {
+                navMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }, 800);
         }
+    });
+
+    // Close menu when clicking a link
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (isMenuOpen) {
+                isMenuOpen = false;
+                mobileToggle.classList.remove('active');
+                menuTl.reverse();
+                setTimeout(() => {
+                    navMenu.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }, 800);
+            }
+        });
     });
 });

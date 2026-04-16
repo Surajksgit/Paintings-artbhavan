@@ -36,22 +36,32 @@
         <div class="nav-container">
             <a href="/" class="brand-logo">Art<span>Bhavan</span></a>
             <div class="nav-links d-none d-md-flex gap-4">
-                <a href="{% url 'arthome' %}" class="text-decoration-none text-white opacity-75 hover-opacity-100">Home</a>
-                <a href="{% url 'collection' %}" class="text-decoration-none text-white opacity-75 hover-opacity-100">Collection</a>
-                <a href="{% url 'my_orders' %}" class="text-decoration-none text-white opacity-75 hover-opacity-100">Orders</a>
-                <a href="{% url 'about' %}" class="text-decoration-none text-white opacity-75 hover-opacity-100">About</a>
-                <a href="{% url 'contact' %}" class="text-decoration-none text-white opacity-75 hover-opacity-100">Contact</a>
+                <a href="{% url 'arthome' %}"
+                    class="text-decoration-none text-white opacity-75 hover-opacity-100">Home</a>
+                <a href="{% url 'collection' %}"
+                    class="text-decoration-none text-white opacity-75 hover-opacity-100">Collection</a>
+                <a href="{% url 'my_orders' %}"
+                    class="text-decoration-none text-white opacity-75 hover-opacity-100">Orders</a>
+                <a href="{% url 'about' %}"
+                    class="text-decoration-none text-white opacity-75 hover-opacity-100">About</a>
+                <a href="{% url 'contact' %}"
+                    class="text-decoration-none text-white opacity-75 hover-opacity-100">Contact</a>
             </div>
             <div class="nav-actions d-flex gap-3 align-items-center">
-                <a href="{% url 'cart' %}" class="text-white opacity-75 hover-opacity-100"><i class="fas fa-shopping-cart"></i></a>
+                <a href="{% url 'cart' %}" class="text-white opacity-75 hover-opacity-100"><i
+                        class="fas fa-shopping-cart"></i></a>
                 <div class="dropdown">
-                    <button class="btn btn-sm btn-outline-warning rounded-pill px-3 dropdown-toggle" data-bs-toggle="dropdown">
+                    <button class="btn btn-sm btn-outline-warning rounded-pill px-3 dropdown-toggle"
+                        data-bs-toggle="dropdown">
                         <i class="fas fa-user-circle me-1"></i> Profile
                     </button>
                     <ul class="dropdown-menu dropdown-menu-dark">
                         <li><a class="dropdown-item" href="{% url 'myprofile' %}">My Profile</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal"
+                                data-bs-target="#logoutModal"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -183,7 +193,8 @@
                     <i class="fa-regular fa-face-frown-open"></i>
                     <h3>No Artworks Found</h3>
                     <p class="text-secondary">Try adjusting your filters or search query.</p>
-                    <a href="{% url 'userdashboard' %}" class="btn btn-outline-warning mt-3 rounded-pill px-4">Clear All Filters</a>
+                    <a href="{% url 'userdashboard' %}" class="btn btn-outline-warning mt-3 rounded-pill px-4">Clear All
+                        Filters</a>
                 </div>
             </div>
             {% endfor %}
@@ -199,11 +210,13 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body text-center py-4">
-                    <div class="logout-icon-large mb-3"><i class="fas fa-door-open text-warning" style="font-size: 3rem;"></i></div>
+                    <div class="logout-icon-large mb-3"><i class="fas fa-door-open text-warning"
+                            style="font-size: 3rem;"></i></div>
                     <p class="text-white">Are you sure you want to exit your creative space?</p>
                 </div>
                 <div class="modal-footer border-0 justify-content-center">
-                    <button type="button" class="btn btn-outline-light rounded-pill" data-bs-dismiss="modal">Stay</button>
+                    <button type="button" class="btn btn-outline-light rounded-pill"
+                        data-bs-dismiss="modal">Stay</button>
                     <a href="{% url 'logout' %}" class="btn btn-danger rounded-pill">Logout Now</a>
                 </div>
             </div>
@@ -217,6 +230,10 @@
         <div class="flash-message {{ message.tags }}">
             <i class="fas fa-check-circle"></i>
             <span>{{ message }}</span>
+            <button class="flash-close-btn" onclick="this.parentElement.remove()"
+                style="background: none; border: none; color: white; opacity: 0.5; margin-left: 10px; cursor: pointer;">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
         {% endfor %}
     </div>
@@ -292,17 +309,29 @@
         }
 
         .flash-message {
-            background: var(--glass-bg);
+            background: rgba(20, 20, 20, 0.8);
             backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border);
             border-radius: 15px;
-            padding: 15px 25px;
+            padding: 15px 20px;
             color: white;
             margin-bottom: 15px;
             display: flex;
             align-items: center;
+            justify-content: space-between;
+            min-width: 250px;
             gap: 12px;
             animation: slideIn 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .flash-close-btn:hover {
+            opacity: 1 !important;
+            transform: scale(1.1);
+        }
+
+        .flash-message i:first-child {
+            font-size: 1.2rem;
         }
 
         .flash-message.success {
@@ -326,6 +355,7 @@
                 transform: translateX(100%);
                 opacity: 0;
             }
+
             to {
                 transform: translateX(0);
                 opacity: 1;
